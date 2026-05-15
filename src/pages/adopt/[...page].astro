@@ -1,0 +1,103 @@
+---
+import type { Page, GetStaticPaths } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { fetchAnimals } from '../../lib/fetchAnimals.js';
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const animals = await fetchAnimals();
+    return paginate(animals, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+    page: Page<{
+        name: string;
+        description: string;
+        imageUrl: string;
+        facebookLink: string;
+    }>;
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title="Осинови">
+    <!-- Header -->
+    <div class="bg-slate-900 py-16 text-white text-center">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+                Осинови приятел
+            </h1>
+            <p class="text-xl text-slate-300">
+                Запознайте се с нашите прекрасни животни, които си търсят дом.
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Animals Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {page.data.map((animal) => (
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col transition-transform hover:-translate-y-1 hover:shadow-md">
+                    <div class="aspect-[4/3] w-full bg-slate-100 overflow-hidden relative group">
+                        <img 
+                            src={animal.imageUrl || '/placeholder.jpg'} 
+                            alt={animal.name} 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                        <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">{animal.name}</h3>
+                        <p class="text-slate-600 text-sm mb-6 flex-grow line-clamp-3">
+                            {animal.description}
+                        </p>
+                        <a href={animal.facebookLink} target="_blank" rel="noopener noreferrer" class="block text-center w-full py-2.5 px-4 bg-orange-50 text-orange-600 font-bold rounded-lg hover:bg-orange-500 hover:text-white transition-colors">
+                            Научете повече
+                        </a>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <!-- Pagination Controls -->
+        {page.lastPage > 1 && (
+            <div class="mt-16 flex items-center justify-center space-x-4">
+                {page.url.prev ? (
+                    <a 
+                        href={page.url.prev} 
+                        class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-600 transition-colors"
+                    >
+                        Предишна
+                    </a>
+                ) : (
+                    <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed">
+                        Предишна
+                    </span>
+                )}
+
+                <div class="flex space-x-2">
+                    <span class="px-4 py-2 bg-orange-500 text-white font-bold rounded-lg">
+                        {page.currentPage}
+                    </span>
+                    <span class="px-4 py-2 text-slate-500 font-medium">
+                        от {page.lastPage}
+                    </span>
+                </div>
+
+                {page.url.next ? (
+                    <a 
+                        href={page.url.next} 
+                        class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-600 transition-colors"
+                    >
+                        Следваща
+                    </a>
+                ) : (
+                    <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed">
+                        Следваща
+                    </span>
+                )}
+            </div>
+        )}
+    </div>
+</Layout>
