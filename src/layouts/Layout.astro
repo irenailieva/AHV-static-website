@@ -43,7 +43,7 @@ const { title } = Astro.props;
             >
                 <a
                     href="/"
-                    class="flex items-center gap-2 text-3xl text-orange-700 tracking-wide"
+                    class="flex items-center gap-2 text-2xl sm:text-3xl text-orange-700 tracking-wide"
                     style="font-family: 'Bangers', cursive; font-weight: 400;"
                 >
                     <img
@@ -51,9 +51,12 @@ const { title } = Astro.props;
                         alt="Animal Hope Varna Logo"
                         class="h-8 w-8 object-contain"
                     />
-                    Animal Hope Varna
+                    <span class="hidden sm:inline">Animal Hope Varna</span>
+                    <span class="sm:hidden">Animal Hope</span>
                 </a>
-                <div class="space-x-8">
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
                     <a
                         href="/"
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
@@ -80,8 +83,39 @@ const { title } = Astro.props;
                         >Контакти</a
                     >
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden text-slate-600 hover:text-orange-700 focus:outline-none">
+                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </nav>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 py-4 px-4 space-y-4 shadow-lg absolute w-full left-0">
+                <a href="/" class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2">Начало</a>
+                <a href="/adopt" class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2">Осинови</a>
+                <a href="/volunteer" class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2">Доброволци</a>
+                <a href="/donate" class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2">Дарения</a>
+                <a href="/contact" class="block text-slate-600 hover:text-orange-700 font-medium transition-colors">Контакти</a>
+            </div>
         </header>
+
+        <script>
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+
+            menuBtn?.addEventListener('click', () => {
+                const isHidden = mobileMenu?.classList.toggle('hidden');
+                if (!isHidden) {
+                    menuIcon?.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                } else {
+                    menuIcon?.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                }
+            });
+        </script>
 
         <main class="flex-grow">
             <slot />
