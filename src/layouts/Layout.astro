@@ -1,8 +1,8 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
@@ -10,60 +10,115 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="bg">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Animal Hope Varna - Официален сайт" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title} | Animal Hope Varna</title>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&family=Bangers&display=swap" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Animal Hope Varna - Официален сайт" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} | Animal Hope Varna</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&family=Bangers&display=swap"
+            rel="stylesheet"
+        />
         <style is:global>
-            body { font-family: 'Montserrat', sans-serif; font-weight: 500; }
-            h1, h2, h3, h4, h5, h6 { font-weight: 800 !important; }
+            body {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 500;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-weight: 800 !important;
+            }
         </style>
-	</head>
-	<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    </head>
+    <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
         <header class="bg-white shadow-sm sticky top-0 z-50">
-            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-                <a href="/" class="flex items-center gap-2 text-3xl text-orange-500 tracking-wide" style="font-family: 'Bangers', cursive; font-weight: 400;">
-                    <img src="/logo-black.png" alt="Animal Hope Varna Logo" class="h-8 w-8 object-contain" />
+            <nav
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"
+            >
+                <a
+                    href="/"
+                    class="flex items-center gap-2 text-3xl text-orange-500 tracking-wide"
+                    style="font-family: 'Bangers', cursive; font-weight: 400;"
+                >
+                    <img
+                        src="/logo-black.png"
+                        alt="Animal Hope Varna Logo"
+                        class="h-8 w-8 object-contain"
+                    />
                     Animal Hope Varna
                 </a>
                 <div class="space-x-8">
-                    <a href="/" class="text-slate-600 hover:text-orange-500 font-medium transition-colors">Начало</a>
-                    <a href="/volunteer" class="text-slate-600 hover:text-orange-500 font-medium transition-colors">Доброволци</a>
-                    <a href="/donate" class="text-slate-600 hover:text-orange-500 font-medium transition-colors">Дарения</a>
-                    <a href="/contact" class="text-slate-600 hover:text-orange-500 font-medium transition-colors">Контакти</a>
+                    <a
+                        href="/"
+                        class="text-slate-600 hover:text-orange-500 font-medium transition-colors"
+                        >Начало</a
+                    >
+                    <a
+                        href="/volunteer"
+                        class="text-slate-600 hover:text-orange-500 font-medium transition-colors"
+                        >Доброволци</a
+                    >
+                    <a
+                        href="/donate"
+                        class="text-slate-600 hover:text-orange-500 font-medium transition-colors"
+                        >Дарения</a
+                    >
+                    <a
+                        href="/contact"
+                        class="text-slate-600 hover:text-orange-500 font-medium transition-colors"
+                        >Контакти</a
+                    >
                 </div>
             </nav>
         </header>
 
-		<main class="flex-grow">
+        <main class="flex-grow">
             <slot />
         </main>
 
         <footer class="bg-slate-900 text-slate-300 py-12 mt-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-4">Animal Hope Varna</h3>
-                    <p class="text-sm">Спасяваме и се грижим за бездомните животни във Варна.</p>
+                    <h3 class="text-xl font-bold text-white mb-4">
+                        Animal Hope Varna
+                    </h3>
+                    <p class="text-sm">
+                        Спасяваме и се грижим за бездомните животни във Варна.
+                    </p>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold text-white mb-4">Контакти</h3>
                     <ul class="space-y-2 text-sm">
-                        <li>Електронна поща: info@animalhope-varna.org</li>
+                        <li>animalhope.varna@gmail.com</li>
                         <li>Варна, България</li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-4">Последвайте ни</h3>
-                    <p class="text-sm mb-4">Всички осиновявания и актуални новини се случват в нашата Facebook страница.</p>
-                    <a href="https://facebook.com/animalhope.varna" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                    <h3 class="text-xl font-bold text-white mb-4">
+                        Последвайте ни
+                    </h3>
+                    <p class="text-sm mb-4">
+                        Всички осиновявания и актуални новини се случват в
+                        нашата Facebook страница.
+                    </p>
+                    <a
+                        href="https://facebook.com/animalhope.varna"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                    >
                         Facebook Страница
                     </a>
                 </div>
             </div>
         </footer>
-	</body>
+    </body>
 </html>
