@@ -1,5 +1,12 @@
 export async function fetchAnimals() {
-    const SHEET_ID = 'PLACEHOLDER_SHEET_ID'; // Замени с реалното ID на таблицата
+    // TODO: ПРЕДИ КАЧВАНЕ В ПРОДУКЦИЯ (DEPLOYMENT)
+    // Тъй като сайтът е статичен (SSG), данните се изтеглят само по време на билд.
+    // За да се отразяват новите записи автоматично, трябва да се настрои Webhook.
+    // 1. Създайте Google Apps Script в таблицата, който слуша за "On Edit" събития.
+    // 2. Скриптът трябва да изпраща POST заявка към Build Hook URL-а на хостинга (Netlify/Vercel).
+    // 3. Така при всяко добавяне на ново животно, сайтът ще се прегенерира сам.
+
+    const SHEET_ID = '1crxL8WwDDgkKMA8TerCoy2ZVJG7hfIF8UD6Ek4uq-1E'; // Реално ID на таблицата
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
     // Ако сме с placeholder ID, връщаме примерни данни за тест на пагинацията
@@ -37,7 +44,7 @@ function transformDriveUrl(url) {
     const fileId = fileIdMatch ? fileIdMatch[1] : (paramIdMatch ? paramIdMatch[1] : null);
     
     if (fileId) {
-        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+        return `https://lh3.googleusercontent.com/d/${fileId}`;
     }
     
     return url;

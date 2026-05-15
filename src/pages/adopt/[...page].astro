@@ -1,5 +1,6 @@
 ---
 import type { Page, GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { fetchAnimals } from '../../lib/fetchAnimals.js';
 
@@ -39,12 +40,22 @@ const { page } = Astro.props;
             {page.data.map((animal) => (
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col transition-transform hover:-translate-y-1 hover:shadow-md">
                     <div class="aspect-[4/3] w-full bg-slate-100 overflow-hidden relative group">
-                        <img 
-                            src={animal.imageUrl || '/placeholder.jpg'} 
-                            alt={animal.name} 
-                            class="w-full h-full object-cover"
-                            loading="lazy"
-                        />
+                        {animal.imageUrl ? (
+                            <Image 
+                                src={animal.imageUrl} 
+                                alt={animal.name} 
+                                inferSize={true}
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                        ) : (
+                            <img 
+                                src="/placeholder.jpg" 
+                                alt={animal.name} 
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                        )}
                         <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors"></div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
