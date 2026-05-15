@@ -1,10 +1,7 @@
 export async function fetchAnimals() {
-    // TODO: ПРЕДИ КАЧВАНЕ В ПРОДУКЦИЯ (DEPLOYMENT)
     // Тъй като сайтът е статичен (SSG), данните се изтеглят само по време на билд.
     // За да се отразяват новите записи автоматично, трябва да се настрои Webhook.
-    // 1. Създайте Google Apps Script в таблицата, който слуша за "On Edit" събития.
-    // 2. Скриптът трябва да изпраща POST заявка към Build Hook URL-а на хостинга (Netlify/Vercel).
-    // 3. Така при всяко добавяне на ново животно, сайтът ще се прегенерира сам.
+    // Инструкции за настройка ще намерите в README.md на проекта.
 
     const SHEET_ID = '1crxL8WwDDgkKMA8TerCoy2ZVJG7hfIF8UD6Ek4uq-1E'; // Реално ID на таблицата
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
