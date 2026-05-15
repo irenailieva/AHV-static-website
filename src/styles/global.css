@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-orange-50: #fef5ec;
+  --color-orange-100: #fce8d2;
+  --color-orange-500: #f68a1f; /* RGB(246, 138, 31) */
+  --color-orange-600: #d97514; /* Hover state */
+  
+  --color-primary: var(--color-orange-500);
+  --color-primary-hover: var(--color-orange-600);
+  --color-secondary: #0f172a; /* Slate-900 */
+  --color-surface: #f8fafc; /* Slate-50 */
+}
+
+body {
+  @apply bg-surface text-secondary antialiased;
+}
