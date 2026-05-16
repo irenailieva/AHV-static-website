@@ -1,0 +1,21 @@
+name: Daily Vercel Rebuild
+
+on:
+  schedule:
+    # Runs at 00:00 UTC (3:00 AM Bulgarian Time) every day
+    - cron: '0 0 * * *'
+  
+  # Allows you to trigger it manually from the GitHub Actions tab if needed
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deploy Hook
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}" ]; then
+            echo "Error: VERCEL_DEPLOY_HOOK_URL is not set"
+            exit 1
+          fi
+          curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
