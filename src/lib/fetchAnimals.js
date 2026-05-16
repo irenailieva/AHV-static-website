@@ -7,7 +7,10 @@ function downloadImage(fileId, localPath) {
         if (fs.existsSync(localPath)) {
             return resolve(true); // Вече съществува
         }
-        const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        const apiKey = typeof process !== 'undefined' ? process.env.GOOGLE_DRIVE_API_KEY : null;
+        const url = apiKey 
+            ? `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`
+            : `https://drive.google.com/uc?export=download&id=${fileId}`;
         https.get(url, (res) => {
             if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
                 https.get(res.headers.location, (res2) => {
