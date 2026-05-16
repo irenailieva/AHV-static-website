@@ -1,54 +1,140 @@
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+
+function downloadImage(fileId, localPath) {
+    return new Promise((resolve) => {
+        if (fs.existsSync(localPath)) {
+            return resolve(true); // Вече съществува
+        }
+        const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        https.get(url, (res) => {
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                https.get(res.headers.location, (res2) => {
+                    if (res2.statusCode !== 200) return resolve(false);
+                    const file = fs.createWriteStream(localPath);
+                    res2.pipe(file);
+                    file.on('finish', () => { file.close(); resolve(true); });
+                    file.on('error', () => resolve(false));
+                }).on('error', () => resolve(false));
+            } else if (res.statusCode === 200) {
+                const file = fs.createWriteStream(localPath);
+                res.pipe(file);
+                file.on('finish', () => { file.close(); resolve(true); });
+                file.on('error', () => resolve(false));
+            } else {
+                resolve(false);
+            }
+        }).on('error', () => resolve(false));
+    });
+}
+
 export async function fetchAnimals() {
-    // Тъй като сайтът е статичен (SSG), данните се изтеглят само по време на билд.
-    // За да се отразяват новите записи автоматично, трябва да се настрои Webhook.
-    // Инструкции за настройка ще намерите в README.md на проекта.
-
     const SHEET_ID = '1crxL8WwDDgkKMA8TerCoy2ZVJG7hfIF8UD6Ek4uq-1E'; // Реално ID на таблицата
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-
-    // Ако сме с placeholder ID, връщаме примерни данни за тест на пагинацията
-    if (SHEET_ID === 'PLACEHOLDER_SHEET_ID') {
-        return Array.from({ length: 26 }, (_, i) => ({
-            name: `Животно ${i + 1}`,
-            description: `Това е прекрасно животно номер ${i + 1}, което си търси своя завинаги дом. Обича внимание и е много дружелюбно.`,
-            imageUrl: `https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80`,
-            facebookLink: `https://facebook.com/animalhope.varna`
-        }));
-    }
+    const IMAGES_GID = '1836292053'; // Въведете GID-а на таб "Images"
+    
+    const MAIN_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+    const IMAGES_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${IMAGES_GID}`;
 
     try {
-        const response = await fetch(CSV_URL);
-        if (!response.ok) {
-            throw new Error(`Грешка при изтегляне: ${response.statusText}`);
+        // 1. Fetch main data
+        const mainResponse = await fetch(MAIN_CSV_URL);
+        if (!mainResponse.ok) {
+            throw new Error(`Грешка при изтегляне на главната таблица: ${mainResponse.statusText}`);
         }
+        const mainCsvText = await mainResponse.text();
+        const mainRows = csvToArray(mainCsvText);
         
-        const csvText = await response.text();
-        return parseCSV(csvText);
+        // Map to objects
+        let animals = mainRows.slice(1).filter(line => 
+            line.length > 1 && 
+            line[1] && 
+            line[0].trim() !== '' && 
+            !isNaN(Number(line[0].trim()))
+        ).map(line => {
+            let fbLink = line[10] || 'https://facebook.com/animalhope.varna';
+            if (fbLink.length < 15 && !fbLink.includes('http')) {
+                fbLink = 'https://facebook.com/animalhope.varna';
+            }
+            
+            return {
+                name: line[1] || 'Неизвестно',
+                sex: line[3] || 'Не е посочен',
+                birthday: line[4] || 'Неизвестна',
+                facebookLink: fbLink,
+                imageUrl: null
+            };
+        });
+
+        // 2. Fetch images mapping
+        const imageMap = new Map();
+        try {
+            const imgResponse = await fetch(IMAGES_CSV_URL);
+            if (imgResponse.ok) {
+                const imgCsvText = await imgResponse.text();
+                const imgRows = csvToArray(imgCsvText);
+                imgRows.slice(1).forEach(line => {
+                    if (line.length >= 2 && line[0] && line[1]) {
+                        const name = line[0].trim().toLowerCase();
+                        const fileId = extractDriveId(line[1].trim());
+                        if (fileId) imageMap.set(name, fileId);
+                    }
+                });
+            }
+        } catch (imgError) {
+            console.warn("Неуспешно извличане на снимките от втория таб.");
+        }
+
+        // 3. Prepare directory for images
+        const publicDir = path.join(process.cwd(), 'public', 'images', 'animals');
+        if (!fs.existsSync(publicDir)) {
+            fs.mkdirSync(publicDir, { recursive: true });
+        }
+
+        // 4. Merge and download
+        const downloadPromises = [];
+        animals = animals.map(animal => {
+            const nameKey = animal.name.trim().toLowerCase();
+            if (imageMap.has(nameKey)) {
+                const fileId = imageMap.get(nameKey);
+                const localFileName = `${fileId}.jpg`;
+                const localFilePath = path.join(publicDir, localFileName);
+                
+                downloadPromises.push(downloadImage(fileId, localFilePath));
+                animal.imageUrl = `/images/animals/${localFileName}`;
+            }
+            return animal;
+        });
+
+        await Promise.all(downloadPromises);
+
+        // 5. Sort - Animals with images first
+        animals.sort((a, b) => {
+            if (a.imageUrl && !b.imageUrl) return -1;
+            if (!a.imageUrl && b.imageUrl) return 1;
+            return 0;
+        });
+
+        return animals;
+        
     } catch (error) {
-        console.error("Грешка при извличане на данните от Google Sheets:", error);
+        console.error("Грешка при извличане на данните:", error);
         return [];
     }
 }
 
-// Помощна функция за конвертиране на Google Drive линкове към директни
-function transformDriveUrl(url) {
-    if (!url) return '';
-    // Проверка за линк от тип /file/d/ID/view
-    const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-    // Проверка за линк от тип ?id=ID
-    const paramIdMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    
-    const fileId = fileIdMatch ? fileIdMatch[1] : (paramIdMatch ? paramIdMatch[1] : null);
-    
-    if (fileId) {
-        return `https://lh3.googleusercontent.com/d/${fileId}`;
+function extractDriveId(url) {
+    if (!url) return null;
+    try {
+        const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) return match[1];
+        return null;
+    } catch (e) {
+        return null;
     }
-    
-    return url;
 }
 
-// Опростен CSV парсър, който се справя с кавички и запетаи вътре в полетата
-function parseCSV(csvText) {
+function csvToArray(csvText) {
     const lines = [];
     let currentLine = [];
     let currentField = '';
@@ -56,11 +142,10 @@ function parseCSV(csvText) {
     
     for (let i = 0; i < csvText.length; i++) {
         const char = csvText[i];
-        
         if (char === '"') {
             if (insideQuotes && csvText[i + 1] === '"') {
                 currentField += '"';
-                i++; // Прескачаме втората кавичка
+                i++;
             } else {
                 insideQuotes = !insideQuotes;
             }
@@ -77,37 +162,10 @@ function parseCSV(csvText) {
         }
     }
     
-    // Добавяме последното поле и ред
     if (currentField || currentLine.length > 0) {
         currentLine.push(currentField.trim());
         lines.push(currentLine);
     }
     
-    // Първият ред са заглавията
-    const headers = lines[0].map(h => h.toLowerCase());
-    
-    return lines.slice(1).filter(line => line.length > 1).map(line => {
-        const obj = {};
-        headers.forEach((header, index) => {
-            let val = line[index] || '';
-            // Търсим основните колони (може да варират според езика)
-            if (header.includes('name') || header.includes('име')) {
-                obj.name = val;
-            } else if (header.includes('desc') || header.includes('описан')) {
-                obj.description = val;
-            } else if (header.includes('image') || header.includes('снимка') || header.includes('снимк')) {
-                obj.imageUrl = transformDriveUrl(val);
-            } else if (header.includes('facebook') || header.includes('фейсбук')) {
-                obj.facebookLink = val;
-            }
-        });
-        
-        // Ако колоните не са намерени по имена, вземаме първите 4 (Име, Описание, Снимка, Facebook)
-        if (!obj.name) obj.name = line[0] || 'Неизвестно';
-        if (!obj.description) obj.description = line[1] || '';
-        if (!obj.imageUrl) obj.imageUrl = transformDriveUrl(line[2] || '');
-        if (!obj.facebookLink) obj.facebookLink = line[3] || 'https://facebook.com/animalhope.varna';
-        
-        return obj;
-    });
+    return lines;
 }

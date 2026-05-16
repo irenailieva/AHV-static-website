@@ -1,6 +1,6 @@
 ---
 import type { Page, GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
+
 import Layout from '../../layouts/Layout.astro';
 import { fetchAnimals } from '../../lib/fetchAnimals.js';
 
@@ -38,13 +38,12 @@ const { page } = Astro.props;
         <!-- Animals Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {page.data.map((animal) => (
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col transition-transform hover:-translate-y-1 hover:shadow-md">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col h-full transition-transform hover:-translate-y-1 hover:shadow-md">
                     <div class="aspect-[4/3] w-full bg-slate-100 overflow-hidden relative group">
                         {animal.imageUrl ? (
-                            <Image 
+                            <img 
                                 src={animal.imageUrl} 
                                 alt={animal.name} 
-                                inferSize={true}
                                 class="w-full h-full object-cover"
                                 loading="lazy"
                             />
@@ -58,15 +57,24 @@ const { page } = Astro.props;
                         )}
                         <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors"></div>
                     </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">{animal.name}</h3>
-                        <p class="text-slate-600 text-sm mb-6 flex-grow line-clamp-3">
-                            {animal.description}
-                        </p>
-                        <a href={animal.facebookLink} target="_blank" rel="noopener noreferrer" class="block text-center w-full py-2.5 px-4 bg-orange-50 text-orange-700 font-bold rounded-lg hover:bg-orange-700 hover:text-white transition-colors">
-                            Научете повече
-                        </a>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="flex items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.name}</h3>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex justify-between items-center text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
+                                <span class="font-bold text-sm uppercase tracking-wide">Пол</span>
+                                <span class="font-medium">{animal.sex}</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
+                                <span class="font-bold text-sm uppercase tracking-wide">Година на раждане</span>
+                                <span class="font-medium">{animal.birthday}</span>
+                            </div>
+                        </div>
                     </div>
+                    <a href={animal.facebookLink} target="_blank" rel="noopener noreferrer" class="block text-center w-full py-3 px-4 bg-orange-700 text-white font-bold rounded-xl hover:bg-orange-800 transition-colors mt-auto shadow-sm">
+                        Вижте във Facebook
+                    </a>
                 </div>
             ))}
         </div>
