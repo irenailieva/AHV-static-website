@@ -1,14 +1,18 @@
 import fs from 'fs';
 import path from 'path';
-import https from 'https';
 
 async function downloadImage(fileId, localPath) {
     if (fs.existsSync(localPath)) {
         return true; // Вече съществува
     }
-    
+
     const apiKey = typeof process !== 'undefined' ? process.env.GOOGLE_DRIVE_API_KEY : null;
-    const url = apiKey 
+    if (apiKey) {
+        console.log(`[Image Downloader] Using API Key for file ${fileId}`);
+    } else {
+        console.warn(`[Image Downloader] NO API KEY FOUND. Falling back to public link for file ${fileId}. This might fail on Vercel!`);
+    }
+    const url = apiKey
         ? `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`
         : `https://drive.google.com/uc?export=download&id=${fileId}`;
 
@@ -18,7 +22,7 @@ async function downloadImage(fileId, localPath) {
             console.error(`Грешка: сървърът върна ${response.status} за файл ${fileId}`);
             return false;
         }
-        
+
         const arrayBuffer = await response.arrayBuffer();
         fs.writeFileSync(localPath, Buffer.from(arrayBuffer));
         return true;
@@ -31,7 +35,7 @@ async function downloadImage(fileId, localPath) {
 export async function fetchAnimals() {
     const SHEET_ID = '1crxL8WwDDgkKMA8TerCoy2ZVJG7hfIF8UD6Ek4uq-1E'; // Реално ID на таблицата
     const IMAGES_GID = '1836292053'; // Въведете GID-а на таб "Images"
-    
+
     const MAIN_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
     const IMAGES_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${IMAGES_GID}`;
 
@@ -43,19 +47,19 @@ export async function fetchAnimals() {
         }
         const mainCsvText = await mainResponse.text();
         const mainRows = csvToArray(mainCsvText);
-        
+
         // Map to objects
-        let animals = mainRows.slice(1).filter(line => 
-            line.length > 1 && 
-            line[1] && 
-            line[0].trim() !== '' && 
+        let animals = mainRows.slice(1).filter(line =>
+            line.length > 1 &&
+            line[1] &&
+            line[0].trim() !== '' &&
             !isNaN(Number(line[0].trim()))
         ).map(line => {
             let fbLink = line[10] || 'https://facebook.com/animalhope.varna';
             if (fbLink.length < 15 && !fbLink.includes('http')) {
                 fbLink = 'https://facebook.com/animalhope.varna';
             }
-            
+
             return {
                 name: line[1] || 'Неизвестно',
                 sex: line[3] || 'Не е посочен',
@@ -98,7 +102,7 @@ export async function fetchAnimals() {
                 const fileId = imageMap.get(nameKey);
                 const localFileName = `${fileId}.jpg`;
                 const localFilePath = path.join(publicDir, localFileName);
-                
+
                 downloadPromises.push(downloadImage(fileId, localFilePath));
                 animal.imageUrl = `/images/animals/${localFileName}`;
             }
@@ -115,7 +119,7 @@ export async function fetchAnimals() {
         });
 
         return animals;
-        
+
     } catch (error) {
         console.error("Грешка при извличане на данните:", error);
         return [];
@@ -138,7 +142,7 @@ function csvToArray(csvText) {
     let currentLine = [];
     let currentField = '';
     let insideQuotes = false;
-    
+
     for (let i = 0; i < csvText.length; i++) {
         const char = csvText[i];
         if (char === '"') {
@@ -160,11 +164,11 @@ function csvToArray(csvText) {
             currentField += char;
         }
     }
-    
+
     if (currentField || currentLine.length > 0) {
         currentLine.push(currentField.trim());
         lines.push(currentLine);
     }
-    
+
     return lines;
 }
