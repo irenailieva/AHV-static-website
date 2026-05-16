@@ -2,34 +2,30 @@ import fs from 'fs';
 import path from 'path';
 import https from 'https';
 
-function downloadImage(fileId, localPath) {
-    return new Promise((resolve) => {
-        if (fs.existsSync(localPath)) {
-            return resolve(true); // Вече съществува
+async function downloadImage(fileId, localPath) {
+    if (fs.existsSync(localPath)) {
+        return true; // Вече съществува
+    }
+    
+    const apiKey = typeof process !== 'undefined' ? process.env.GOOGLE_DRIVE_API_KEY : null;
+    const url = apiKey 
+        ? `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`
+        : `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            console.error(`Грешка: сървърът върна ${response.status} за файл ${fileId}`);
+            return false;
         }
-        const apiKey = typeof process !== 'undefined' ? process.env.GOOGLE_DRIVE_API_KEY : null;
-        const url = apiKey 
-            ? `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`
-            : `https://drive.google.com/uc?export=download&id=${fileId}`;
-        https.get(url, (res) => {
-            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-                https.get(res.headers.location, (res2) => {
-                    if (res2.statusCode !== 200) return resolve(false);
-                    const file = fs.createWriteStream(localPath);
-                    res2.pipe(file);
-                    file.on('finish', () => { file.close(); resolve(true); });
-                    file.on('error', () => resolve(false));
-                }).on('error', () => resolve(false));
-            } else if (res.statusCode === 200) {
-                const file = fs.createWriteStream(localPath);
-                res.pipe(file);
-                file.on('finish', () => { file.close(); resolve(true); });
-                file.on('error', () => resolve(false));
-            } else {
-                resolve(false);
-            }
-        }).on('error', () => resolve(false));
-    });
+        
+        const arrayBuffer = await response.arrayBuffer();
+        fs.writeFileSync(localPath, Buffer.from(arrayBuffer));
+        return true;
+    } catch (e) {
+        console.error("Грешка при изтегляне на изображение:", e.message);
+        return false;
+    }
 }
 
 export async function fetchAnimals() {
