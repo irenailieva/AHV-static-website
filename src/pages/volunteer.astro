@@ -77,11 +77,12 @@ import Layout from "../layouts/Layout.astro";
                     </p>
                 </div>
             </div>
-            <div class="rounded-2xl w-full overflow-hidden shadow-lg">
+            <div class="rounded-2xl w-full overflow-hidden shadow-lg bg-slate-200 animate-pulse">
                 <img
                     src="/svetladimitrova.jpg"
                     alt="Светла Димитрова - Ръководител на организацията"
-                    class="w-full h-auto object-cover aspect-video"
+                    class="w-full h-auto object-cover aspect-video opacity-0 transition-opacity duration-700 ease-in-out"
+                    onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('animate-pulse');"
                 />
             </div>
         </div>
