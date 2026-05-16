@@ -115,6 +115,41 @@ const { title } = Astro.props;
                     menuIcon?.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
                 }
             });
+
+            // Scroll Reveal Logic
+            const initScrollReveal = () => {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('reveal-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+
+                // Automatically target sections in main
+                const mainSections = document.querySelectorAll('main section');
+                mainSections.forEach(section => {
+                    if (!section.classList.contains('reveal')) {
+                        section.classList.add('reveal', 'reveal-up');
+                    }
+                });
+
+                // Observe all elements with reveal class
+                const revealElements = document.querySelectorAll('.reveal');
+                revealElements.forEach(el => observer.observe(el));
+            };
+
+            // Run on initial load
+            initScrollReveal();
+
+            // Run on view transitions if using Astro transitions
+            document.addEventListener('astro:after-swap', initScrollReveal);
         </script>
 
         <main class="flex-grow">
