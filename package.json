@@ -6,8 +6,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "node ./scripts/sync-images.js && astro dev",
+    "build": "node ./scripts/sync-images.js && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
