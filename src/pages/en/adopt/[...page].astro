@@ -1,8 +1,8 @@
 ---
 import type { Page, GetStaticPaths } from 'astro';
 
-import Layout from '../../layouts/Layout.astro';
-import { fetchAnimals } from '../../lib/fetchAnimals.js';
+import Layout from '../../../layouts/Layout.astro';
+import { fetchAnimals } from '../../../lib/fetchAnimals.js';
 
 export const getStaticPaths = (async ({ paginate }) => {
     const animals = await fetchAnimals();
@@ -12,6 +12,8 @@ export const getStaticPaths = (async ({ paginate }) => {
 interface Props {
     page: Page<{
         name: string;
+        sex: string;
+        birthday: string;
         description: string;
         imageUrl: string;
         facebookLink: string;
@@ -19,17 +21,32 @@ interface Props {
 }
 
 const { page } = Astro.props;
+
+const translateSex = (sex: string) => {
+    if (!sex) return 'Not specified';
+    const s = sex.toLowerCase();
+    if (s.includes('мъж')) return 'Male';
+    if (s.includes('жен')) return 'Female';
+    if (s.includes('не е посочен')) return 'Not specified';
+    return sex;
+};
+
+const translateBirthday = (bday: string) => {
+    if (!bday) return 'Unknown';
+    if (bday.toLowerCase().includes('неизвестна')) return 'Unknown';
+    return bday;
+};
 ---
 
-<Layout title="Осинови">
+<Layout title="Adopt">
     <!-- Header -->
     <div class="bg-slate-900 py-16 text-white text-center">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-                Осинови приятел
+                Adopt a friend
             </h1>
             <p class="text-xl text-slate-300">
-                Запознайте се с нашите прекрасни животни, които си търсят дом.
+                Meet our wonderful animals looking for a home.
             </p>
         </div>
     </div>
@@ -55,7 +72,7 @@ const { page } = Astro.props;
                                     <circle cx="9" cy="9" r="2"/>
                                     <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
                                 </svg>
-                                <span class="text-sm font-medium">Няма снимка</span>
+                                <span class="text-sm font-medium">No image</span>
                             </div>
                         )}
                         <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors pointer-events-none"></div>
@@ -66,17 +83,17 @@ const { page } = Astro.props;
                         </div>
                         <div class="space-y-3 mb-8">
                             <div class="flex justify-between items-center text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
-                                <span class="font-bold text-sm uppercase tracking-wide">Пол</span>
-                                <span class="font-medium">{animal.sex}</span>
+                                <span class="font-bold text-sm uppercase tracking-wide">Sex</span>
+                                <span class="font-medium">{translateSex(animal.sex)}</span>
                             </div>
                             <div class="flex justify-between items-center text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
-                                <span class="font-bold text-sm uppercase tracking-wide">Година на раждане</span>
-                                <span class="font-medium">{animal.birthday}</span>
+                                <span class="font-bold text-sm uppercase tracking-wide">Birth year</span>
+                                <span class="font-medium">{translateBirthday(animal.birthday)}</span>
                             </div>
                         </div>
                     </div>
                     <a href={animal.facebookLink} target="_blank" rel="noopener noreferrer" class="block text-center w-full py-3 px-4 bg-orange-700 text-white font-bold rounded-xl hover:bg-orange-800 transition-colors mt-auto shadow-sm">
-                        Вижте във Facebook
+                        View on Facebook
                     </a>
                 </div>
             ))}
@@ -90,11 +107,11 @@ const { page } = Astro.props;
                         href={page.url.prev} 
                         class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors"
                     >
-                        Предишна
+                        Previous
                     </a>
                 ) : (
                     <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-600 font-medium rounded-lg cursor-not-allowed">
-                        Предишна
+                        Previous
                     </span>
                 )}
 
@@ -103,7 +120,7 @@ const { page } = Astro.props;
                         {page.currentPage}
                     </span>
                     <span class="px-4 py-2 text-slate-700 font-medium">
-                        от {page.lastPage}
+                        of {page.lastPage}
                     </span>
                 </div>
 
@@ -112,11 +129,11 @@ const { page } = Astro.props;
                         href={page.url.next} 
                         class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors"
                     >
-                        Следваща
+                        Next
                     </a>
                 ) : (
                     <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-600 font-medium rounded-lg cursor-not-allowed">
-                        Следваща
+                        Next
                     </span>
                 )}
             </div>

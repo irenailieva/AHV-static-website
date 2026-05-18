@@ -1,15 +1,26 @@
 ---
 import "../styles/global.css";
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
     title: string;
 }
 
 const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pathname = Astro.url.pathname;
+const isEn = lang === 'en';
+const toggleLangUrl = isEn 
+    ? pathname.replace(/^\/en/, '') || '/'
+    : `/en${pathname === '/' ? '' : pathname}`;
+const toggleLangText = isEn ? 'BG' : 'EN';
 ---
 
 <!doctype html>
-<html lang="bg">
+<html lang={lang}>
     <head>
         <meta charset="UTF-8" />
         <meta name="description" content="Animal Hope Varna - Официален сайт" />
@@ -42,7 +53,7 @@ const { title } = Astro.props;
                 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"
             >
                 <a
-                    href="/"
+                    href={getRelativeLocaleUrl(lang, '/')}
                     class="flex items-center gap-2 text-2xl sm:text-3xl text-orange-700 tracking-wide"
                     style="font-family: 'Bangers', cursive; font-weight: 400;"
                 >
@@ -56,32 +67,38 @@ const { title } = Astro.props;
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden md:flex space-x-8 items-center">
                     <a
-                        href="/"
+                        href={getRelativeLocaleUrl(lang, '/')}
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >Начало</a
+                        >{t('nav.home')}</a
                     >
                     <a
-                        href="/adopt"
+                        href={getRelativeLocaleUrl(lang, '/adopt')}
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >Осинови</a
+                        >{t('nav.adopt')}</a
                     >
                     <a
-                        href="/volunteer"
+                        href={getRelativeLocaleUrl(lang, '/volunteer')}
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >Доброволци</a
+                        >{t('nav.volunteer')}</a
                     >
                     <a
-                        href="/donate"
+                        href={getRelativeLocaleUrl(lang, '/donate')}
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >Дарения</a
+                        >{t('nav.donate')}</a
                     >
                     <a
-                        href="/contact"
+                        href={getRelativeLocaleUrl(lang, '/contact')}
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >Контакти</a
+                        >{t('nav.contact')}</a
                     >
+                    <a
+                        href={toggleLangUrl}
+                        class="text-orange-700 font-bold border border-orange-700 rounded px-3 py-1 hover:bg-orange-700 hover:text-white transition-colors ml-4"
+                    >
+                        {toggleLangText}
+                    </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -111,30 +128,36 @@ const { title } = Astro.props;
                 class="hidden md:hidden bg-white border-t border-slate-100 py-4 px-4 space-y-4 shadow-lg absolute w-full left-0"
             >
                 <a
-                    href="/"
+                    href={getRelativeLocaleUrl(lang, '/')}
                     class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
-                    >Начало</a
+                    >{t('nav.home')}</a
                 >
                 <a
-                    href="/adopt"
+                    href={getRelativeLocaleUrl(lang, '/adopt')}
                     class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
-                    >Осинови</a
+                    >{t('nav.adopt')}</a
                 >
                 <a
-                    href="/volunteer"
+                    href={getRelativeLocaleUrl(lang, '/volunteer')}
                     class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
-                    >Доброволци</a
+                    >{t('nav.volunteer')}</a
                 >
                 <a
-                    href="/donate"
+                    href={getRelativeLocaleUrl(lang, '/donate')}
                     class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
-                    >Дарения</a
+                    >{t('nav.donate')}</a
                 >
                 <a
-                    href="/contact"
-                    class="block text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                    >Контакти</a
+                    href={getRelativeLocaleUrl(lang, '/contact')}
+                    class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
+                    >{t('nav.contact')}</a
                 >
+                <a
+                    href={toggleLangUrl}
+                    class="block text-orange-700 font-bold transition-colors pt-2"
+                >
+                    {toggleLangText}
+                </a>
             </div>
         </header>
 
@@ -201,28 +224,27 @@ const { title } = Astro.props;
                         Animal Hope Varna
                     </h3>
                     <p class="text-sm">
-                        Спасяваме и се грижим за бездомните животни във Варна.
+                        {t('footer.desc')}
                     </p>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-4">Контакти</h3>
+                    <h3 class="text-xl font-bold text-white mb-4">{t('footer.contacts')}</h3>
                     <ul class="space-y-2 text-sm">
                         <li>
                             <a
-                                href="/contact#contact-form"
+                                href={getRelativeLocaleUrl(lang, '/contact#contact-form')}
                                 class="hover:text-orange-700 transition-colors"
                                 >animal.hope.varna.bg@gmail.com</a>
                         </li>
-                        <li>Варна, България</li>
+                        <li>{t('footer.address')}</li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold text-white mb-4">
-                        Последвайте ни
+                        {t('footer.follow')}
                     </h3>
                     <p class="text-sm mb-4">
-                        Всички осиновявания и актуални новини се случват в
-                        нашата Facebook страница.
+                        {t('footer.socialDesc')}
                     </p>
                     <div class="flex flex-wrap gap-3">
                         <a
