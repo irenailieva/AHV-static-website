@@ -82,12 +82,12 @@ const translateBirthday = (bday: string) => {
                             <h3 class="text-2xl font-extrabold text-slate-900">{animal.name}</h3>
                         </div>
                         <div class="space-y-3 mb-8">
-                            <div class="flex justify-between items-center text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
                                 <span class="font-bold text-sm uppercase tracking-wide">Sex</span>
                                 <span class="font-medium">{translateSex(animal.sex)}</span>
                             </div>
-                            <div class="flex justify-between items-center text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
-                                <span class="font-bold text-sm uppercase tracking-wide">Birth year</span>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
+                                <span class="font-bold text-sm uppercase tracking-wide">Born</span>
                                 <span class="font-medium">{translateBirthday(animal.birthday)}</span>
                             </div>
                         </div>
