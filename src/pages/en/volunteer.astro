@@ -18,17 +18,40 @@ import catImage from "../../assets/CAT.jpg";
     </div>
 
     <!-- Full-width banner -->
-    <div class="w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden bg-slate-200 animate-pulse relative">
+    <div class="w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden bg-slate-200 animate-pulse relative banner-container">
         <Image
             src={catImage}
             alt="Volunteer hero banner"
-            class="w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 ease-in-out"
-            onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('animate-pulse');"
+            widths={[640, 1024, 1920]}
+            sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1920px"
+            class="w-full h-full object-cover object-center opacity-0 transition-opacity duration-1000 ease-in-out hero-banner-img"
             loading="eager"
             fetchpriority="high"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none"></div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const bannerImg = document.querySelector(".hero-banner-img");
+            const container = document.querySelector(".banner-container");
+            
+            if (bannerImg) {
+                const revealImage = () => {
+                    requestAnimationFrame(() => {
+                        bannerImg.classList.remove("opacity-0");
+                        if (container) container.classList.remove("animate-pulse");
+                    });
+                };
+
+                if (bannerImg.complete) {
+                    revealImage();
+                } else {
+                    bannerImg.addEventListener("load", revealImage);
+                }
+            }
+        });
+    </script>
 
     <!-- Text content section -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-24 relative z-10 mb-12">
