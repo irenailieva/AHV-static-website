@@ -1,0 +1,172 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import catImage from "../../assets/CAT.jpg";
+---
+
+<Layout title="Leben im Tierheim">
+    <!-- Header -->
+    <div class="bg-slate-900 py-16 text-white text-center">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+                Leben im Tierheim
+            </h1>
+            <p class="text-xl text-slate-300">
+                Erfahren Sie mehr über unseren Alltag und wie Sie Teil unseres Freiwilligenteams werden können.
+            </p>
+        </div>
+    </div>
+
+    <!-- Full-width banner -->
+    <div class="w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden bg-slate-200 animate-pulse relative">
+        <Image
+            src={catImage}
+            alt="Freiwillige"
+            class="w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 ease-in-out"
+            onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('animate-pulse');"
+            loading="eager"
+            fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none"></div>
+    </div>
+
+    <!-- Text content section -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-24 relative z-10 mb-12">
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 reveal reveal-up delay-100">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">
+                    Unsere Sonntagstreffen
+                </h2>
+                <p class="text-xl text-slate-600">
+                    Jeder Sonntagmorgen ist eine besondere Zeit für uns und unsere vierbeinigen Freunde. Wir treffen uns, um den Transport zu organisieren, Aufgaben zu verteilen und zum Tierheim zu fahren.
+                </p>
+            </div>
+
+            <div class="bg-orange-50 rounded-2xl mb-10 text-center border border-orange-100 overflow-hidden shadow-sm">
+                <img src="/Varna_Cathedral.JPG" alt="Kathedrale der Himmelfahrt, Varna" class="w-full h-48 sm:h-64 object-cover" />
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-orange-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Zeit & Ort
+                    </h3>
+                    <p class="text-2xl font-extrabold text-orange-700 mb-2">
+                        Jeden Sonntag um 08:30 Uhr
+                    </p>
+                    <p class="text-lg text-slate-700">
+                        Vor der Kathedrale der Himmelfahrt, Varna.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-lg text-slate-600 text-center leading-relaxed">
+                Wenn Sie vorbeikommen und beim Reinigen, Füttern und Pflegen der Tiere helfen möchten, kontaktieren Sie uns bitte im Voraus – schreiben Sie uns auf unserer 
+                <a href="https://facebook.com/animalhope.varna" target="_blank" rel="noopener noreferrer" class="text-orange-700 font-bold hover:underline">Facebook-Seite</a>
+                oder senden Sie eine E-Mail an 
+                <a href="mailto:animal.hope.varna.bg@gmail.com" class="text-orange-700 font-bold hover:underline">animal.hope.varna.bg@gmail.com</a>.
+                Kommen Sie in bequemer Kleidung, die schmutzig werden darf.
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+
+        <!-- Volunteering Section -->
+        <div
+            class="bg-slate-50 rounded-3xl p-8 md:p-12 border border-slate-100"
+        >
+            <div class="text-center mb-12 reveal reveal-up delay-100">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">
+                    Was machen Freiwillige?
+                </h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                    Freiwilligenarbeit bei uns bedeutet viel harte Arbeit, aber auch unendliche Dankbarkeit der Tiere.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 reveal reveal-up delay-100"
+                >
+                    <div
+                        class="w-12 h-12 bg-orange-100 text-orange-700 rounded-lg flex items-center justify-center mb-6"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">
+                        Sozialisierung
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Viele unserer Tiere wurden misshandelt oder ausgesetzt. Die Anwesenheit von Freiwilligen, die sich mit Aufmerksamkeit und Wärme um sie kümmern, gibt ihnen ein Gefühl der Sicherheit – ein entscheidender Schritt für ihre erfolgreiche Adoption.
+                    </p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 reveal reveal-up delay-200"
+                >
+                    <div
+                        class="w-12 h-12 bg-orange-100 text-orange-700 rounded-lg flex items-center justify-center mb-6"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">
+                        Pflege & Hygiene
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Das Reinigen von Käfigen und Futternäpfen, das Wechseln der Einstreu und die Einhaltung der Hygiene im Tierheim ist eine tägliche und äußerst wichtige Aufgabe für die Gesundheit der Tiere.
+                    </p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 reveal reveal-up delay-300"
+                >
+                    <div
+                        class="w-12 h-12 bg-orange-100 text-orange-700 rounded-lg flex items-center justify-center mb-6"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">
+                        Organisation
+                    </h3>
+                    <p class="text-slate-600 text-sm">
+                        Wir helfen beim Transport zu Tierkliniken, nehmen an Wohltätigkeitsbasaren teil und verbreiten Informationen über Tiere, die ein Zuhause suchen.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

@@ -1,0 +1,222 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Spenden">
+    <div class="bg-orange-50 py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">
+                Unterstützen Sie unsere Sache
+            </h1>
+            <p class="text-xl text-slate-600">
+                Jede Spende, egal wie klein, hilft uns, Leben zu retten, Futter, Unterkunft und medizinische Versorgung für bedürftige Tiere bereitzustellen.
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+        <!-- Bank Transfer -->
+        <section
+            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
+        >
+            <h2
+                class="text-2xl font-bold text-slate-900 mb-6 flex items-center"
+            >
+                <svg
+                    class="w-8 h-8 text-orange-700 mr-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                    ></path>
+                </svg>
+                Banküberweisung
+            </h2>
+            <div
+                class="bg-slate-50 p-6 rounded-lg font-mono text-sm sm:text-base space-y-3"
+            >
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-2 border-b border-slate-200 pb-3"
+                >
+                    <span class="text-slate-700">Bank:</span>
+                    <span class="sm:col-span-2 font-medium"
+                        >First Investment Bank (Fibank)</span
+                     >
+                </div>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-2 border-b border-slate-200 pb-3"
+                >
+                    <span class="text-slate-700">Kontoinhaber:</span>
+                    <span class="sm:col-span-2 font-medium"
+                        >Stiftung "Animal Hope Varna"</span
+                    >
+                </div>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-2 border-b border-slate-200 pb-3"
+                >
+                    <span class="text-slate-700">IBAN:</span>
+                    <span class="sm:col-span-2 font-medium text-orange-700"
+                        >BG56 FINV 9150 1215 7665 63</span
+                    >
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <span class="text-slate-700">BIC:</span>
+                    <span class="sm:col-span-2 font-medium">FINV BGSF</span>
+                </div>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-3 border-t border-slate-200 mt-3"
+                >
+                    <span class="text-slate-700">Verwendungszweck:</span>
+                    <span class="sm:col-span-2 font-medium"
+                        >Spende für Vereinstätigkeit</span
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- PayPal -->
+        <section
+            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
+        >
+            <h2
+                class="text-2xl font-bold text-slate-900 mb-6 flex items-center"
+            >
+                <svg
+                    class="w-8 h-8 text-[#00457C] mr-3"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zM6.924 1.488L4.015 19.85h2.19c.524 0 .968-.382 1.05-.9l1.12-7.106a1.494 1.494 0 0 1 1.472-1.262h2.19c3.42 0 6.079-1.39 6.845-5.32.023-.118.044-.236.064-.354.218-1.39.006-2.316-.628-3.04-1.114-1.272-3.21-1.637-5.918-1.637H6.924z"
+                    ></path>
+                </svg>
+                PayPal
+            </h2>
+            <p class="text-slate-600 mb-6">
+                Eine schnelle und sichere Möglichkeit, aus der ganzen Welt über Ihr PayPal-Konto oder Ihre Kreditkarte zu spenden.
+            </p>
+            <a
+                href="https://www.paypal.com/donate?business=animalhope.varna@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-6 py-3 bg-[#00457C] text-white font-medium rounded-lg hover:bg-[#003666] transition-colors"
+            >
+                Mit PayPal spenden
+            </a>
+            <p class="mt-4 text-sm text-slate-700">
+                E-Mail für Direktüberweisung: animalhope.varna@gmail.com
+            </p>
+        </section>
+
+        <!-- SMS Donation -->
+        <section
+            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
+        >
+            <h2
+                class="text-2xl font-bold text-slate-900 mb-6 flex items-center"
+            >
+                <svg
+                    class="w-8 h-8 text-orange-700 mr-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                    ></path>
+                </svg>
+                DMS SMS-Spende
+            </h2>
+            <div
+                class="bg-orange-50 border border-orange-100 p-6 rounded-xl text-center"
+            >
+                <p class="text-lg text-slate-700 mb-2">Senden Sie eine SMS mit dem Text</p>
+                <div
+                    class="text-3xl font-extrabold text-orange-700 tracking-wider mb-2"
+                >
+                    DMS ANIMAL
+                </div>
+                <p class="text-lg text-slate-700 mb-4">an die Nummer</p>
+                <div
+                    class="text-3xl font-extrabold text-slate-900 tracking-wider mb-6"
+                >
+                    17 777
+                </div>
+                <p class="text-sm text-slate-700">
+                    Spenden Sie per SMS ab 1,02 EUR / 2 BGN. Abonnieren Sie eine monatliche SMS-Spende von 2,56 EUR oder 5.11 EUR / 5 oder 10 BGN. (Verfügbar für bulgarische Mobilfunkanbieter)
+                </p>
+            </div>
+        </section>
+
+        <!-- Veterinary Clinic -->
+        <section
+            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
+        >
+            <h2
+                class="text-2xl font-bold text-slate-900 mb-6 flex items-center"
+            >
+                <svg
+                    class="w-8 h-8 text-red-500 mr-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    ></path>
+                </svg>
+                Tierklinik
+            </h2>
+            <p class="text-slate-600 mb-6">
+                Sie können vor Ort eine Spende hinterlassen oder die Rechnung der Organisation in unserer Partnerpraxis begleichen:
+            </p>
+            <div
+                class="bg-slate-50 p-6 rounded-lg space-y-3"
+            >
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-2 border-b border-slate-200 pb-3"
+                >
+                    <span class="text-slate-700 font-bold">Klinik:</span>
+                    <span class="sm:col-span-2 font-medium"
+                        >Tierarztpraxis Dr. Manolov</span
+                    >
+                </div>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-2 border-b border-slate-200 pb-3"
+                >
+                    <span class="text-slate-700 font-bold">Adresse:</span>
+                    <span class="sm:col-span-2 font-medium">Varna, Kapitan-Raitscho-Nikolow-Str. 36</span>
+                </div>
+                <div class="pt-2 text-sm text-slate-500 italic">
+                    * Bitte geben Sie an der Rezeption an, dass die Spende für „Animal Hope Varna“ bestimmt ist.
+                </div>
+            </div>
+        </section>
+
+        <!-- Material Donations -->
+        <section
+            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
+        >
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">
+                Sachspenden
+            </h2>
+            <p class="text-slate-600 mb-4">
+                Wir haben ständig Bedarf an Trocken- und Nassfutter, Entwurmungsmitteln, allgemeinen Tierarzneimitteln, Bettchen und Katzenkratzbäumen.
+            </p>
+            <p class="text-slate-600">
+                Sie können Ihre Spenden jeden Sonntag zu unserem Treffpunkt vor der Kathedrale bringen oder uns kontaktieren, um eine Übergabe zu vereinbaren.
+            </p>
+        </section>
+    </div>
+</Layout>

@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   i18n: {
     defaultLocale: 'bg',
-    locales: ['bg', 'en'],
+    locales: ['bg', 'en', 'de'],
     routing: {
       prefixDefaultLocale: false
     }

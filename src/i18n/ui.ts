@@ -1,6 +1,7 @@
 export const languages = {
   bg: 'BG',
   en: 'EN',
+  de: 'DE',
 };
 
 export const defaultLang = 'bg';
@@ -29,5 +30,17 @@ export const ui = {
     'footer.address': 'Varna, Bulgaria',
     'footer.follow': 'Follow us',
     'footer.socialDesc': 'All adoptions and current news happen on our Facebook page.',
+  },
+  de: {
+    'nav.home': 'Startseite',
+    'nav.adopt': 'Adoptieren',
+    'nav.volunteer': 'Freiwillige',
+    'nav.donate': 'Spenden',
+    'nav.contact': 'Kontakt',
+    'footer.desc': 'Wir retten und kümmern uns um obdachlose Tiere in Varna.',
+    'footer.contacts': 'Kontakt',
+    'footer.address': 'Varna, Bulgarien',
+    'footer.follow': 'Folgen Sie uns',
+    'footer.socialDesc': 'Alle Adoptionen und aktuellen Nachrichten finden auf unserer Facebook-Seite statt.',
   },
 } as const;

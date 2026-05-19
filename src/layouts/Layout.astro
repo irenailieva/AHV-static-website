@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { languages } from '../i18n/ui';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
@@ -12,11 +13,6 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const pathname = Astro.url.pathname;
-const isEn = lang === 'en';
-const toggleLangUrl = isEn 
-    ? pathname.replace(/^\/en/, '') || '/'
-    : `/en${pathname === '/' ? '' : pathname}`;
-const toggleLangText = isEn ? 'BG' : 'EN';
 ---
 
 <!doctype html>
@@ -93,12 +89,31 @@ const toggleLangText = isEn ? 'BG' : 'EN';
                         class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
                         >{t('nav.contact')}</a
                     >
-                    <a
-                        href={toggleLangUrl}
-                        class="text-orange-700 font-bold border border-orange-700 rounded px-3 py-1 hover:bg-orange-700 hover:text-white transition-colors ml-4"
-                    >
-                        {toggleLangText}
-                    </a>
+                    <div class="flex gap-2 ml-4">
+                        {Object.entries(languages).map(([code, label]) => {
+                            const isActive = code === lang;
+                            let base = pathname;
+                            if (base.startsWith('/en')) {
+                                base = base.substring(3) || '/';
+                            } else if (base.startsWith('/de')) {
+                                base = base.substring(3) || '/';
+                            }
+                            const href = code === 'bg' ? base : `/${code}${base === '/' ? '' : base}`;
+                            
+                            return (
+                                <a
+                                    href={href}
+                                    class={`font-bold border rounded px-2.5 py-1 text-sm transition-colors ${
+                                        isActive
+                                            ? "bg-orange-700 text-white border-orange-700"
+                                            : "text-slate-600 border-slate-200 hover:border-orange-700 hover:text-orange-700"
+                                    }`}
+                                >
+                                    {label}
+                                </a>
+                            );
+                        })}
+                    </div>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -152,12 +167,31 @@ const toggleLangText = isEn ? 'BG' : 'EN';
                     class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
                     >{t('nav.contact')}</a
                 >
-                <a
-                    href={toggleLangUrl}
-                    class="block text-orange-700 font-bold transition-colors pt-2"
-                >
-                    {toggleLangText}
-                </a>
+                <div class="flex gap-2 pt-2 border-t border-slate-100 mt-2">
+                    {Object.entries(languages).map(([code, label]) => {
+                        const isActive = code === lang;
+                        let base = pathname;
+                        if (base.startsWith('/en')) {
+                            base = base.substring(3) || '/';
+                        } else if (base.startsWith('/de')) {
+                            base = base.substring(3) || '/';
+                        }
+                        const href = code === 'bg' ? base : `/${code}${base === '/' ? '' : base}`;
+                        
+                        return (
+                            <a
+                                href={href}
+                                class={`font-bold border rounded px-3 py-1.5 text-sm transition-colors ${
+                                    isActive
+                                        ? "bg-orange-700 text-white border-orange-700"
+                                        : "text-slate-600 border-slate-200"
+                                }`}
+                            >
+                                {label}
+                            </a>
+                        );
+                    })}
+                </div>
             </div>
         </header>
 
