@@ -1,7 +1,7 @@
 export const languages = {
-  bg: 'BG',
-  en: 'EN',
-  de: 'DE',
+  bg: '🇧🇬 BG',
+  en: '🇬🇧 EN',
+  de: '🇩🇪 DE',
 };
 
 export const defaultLang = 'bg';

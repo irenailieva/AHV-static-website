@@ -62,34 +62,39 @@ const pathname = Astro.url.pathname;
                     <span class="sm:hidden">Animal Hope</span>
                 </a>
 
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex space-x-4 xl:space-x-8 items-center">
-                    <a
-                        href={getRelativeLocaleUrl(lang, '/')}
-                        class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >{t('nav.home')}</a
-                    >
-                    <a
-                        href={getRelativeLocaleUrl(lang, '/adopt')}
-                        class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >{t('nav.adopt')}</a
-                    >
-                    <a
-                        href={getRelativeLocaleUrl(lang, '/volunteer')}
-                        class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >{t('nav.volunteer')}</a
-                    >
-                    <a
-                        href={getRelativeLocaleUrl(lang, '/donate')}
-                        class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >{t('nav.donate')}</a
-                    >
-                    <a
-                        href={getRelativeLocaleUrl(lang, '/contact')}
-                        class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
-                        >{t('nav.contact')}</a
-                    >
-                    <div class="flex gap-2 ml-4">
+                <!-- Actions Container -->
+                <div class="flex items-center">
+                    <!-- Desktop Menu Links -->
+                    <div class="hidden lg:flex space-x-4 xl:space-x-8 items-center mr-4 lg:mr-8">
+                        <a
+                            href={getRelativeLocaleUrl(lang, '/')}
+                            class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
+                            >{t('nav.home')}</a
+                        >
+                        <a
+                            href={getRelativeLocaleUrl(lang, '/adopt')}
+                            class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
+                            >{t('nav.adopt')}</a
+                        >
+                        <a
+                            href={getRelativeLocaleUrl(lang, '/volunteer')}
+                            class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
+                            >{t('nav.volunteer')}</a
+                        >
+                        <a
+                            href={getRelativeLocaleUrl(lang, '/donate')}
+                            class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
+                            >{t('nav.donate')}</a
+                        >
+                        <a
+                            href={getRelativeLocaleUrl(lang, '/contact')}
+                            class="text-slate-600 hover:text-orange-700 font-medium transition-colors"
+                            >{t('nav.contact')}</a
+                        >
+                    </div>
+                    
+                    <!-- Language Switchers (Always Visible) -->
+                    <div class="flex gap-1 sm:gap-2">
                         {Object.entries(languages).map(([code, label]) => {
                             const isActive = code === lang;
                             let base = pathname;
@@ -103,38 +108,40 @@ const pathname = Astro.url.pathname;
                             return (
                                 <a
                                     href={href}
-                                    class={`font-bold border rounded px-2.5 py-1 text-sm transition-colors ${
+                                    class={`flex items-center font-bold border rounded px-1.5 sm:px-2.5 py-1 transition-colors ${
                                         isActive
                                             ? "bg-orange-700 text-white border-orange-700"
                                             : "text-slate-600 border-slate-200 hover:border-orange-700 hover:text-orange-700"
                                     }`}
+                                    title={label}
                                 >
-                                    {label}
+                                    <span class="text-lg leading-none">{label.split(' ')[0]}</span>
+                                    <span class="hidden sm:inline text-sm ml-1">{label.split(' ')[1]}</span>
                                 </a>
                             );
                         })}
                     </div>
-                </div>
 
-                <!-- Mobile Menu Button -->
-                <button
-                    id="menu-btn"
-                    class="lg:hidden text-slate-600 hover:text-orange-700 focus:outline-none"
-                >
-                    <svg
-                        class="h-8 w-8"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    <!-- Mobile Menu Button -->
+                    <button
+                        id="menu-btn"
+                        class="lg:hidden text-slate-600 hover:text-orange-700 focus:outline-none ml-2 sm:ml-4"
                     >
-                        <path
-                            id="menu-icon"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                        <svg
+                            class="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                id="menu-icon"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </nav>
 
             <!-- Mobile Menu -->
@@ -167,31 +174,6 @@ const pathname = Astro.url.pathname;
                     class="block text-slate-600 hover:text-orange-700 font-medium transition-colors border-b border-slate-50 pb-2"
                     >{t('nav.contact')}</a
                 >
-                <div class="flex gap-2 pt-2 border-t border-slate-100 mt-2">
-                    {Object.entries(languages).map(([code, label]) => {
-                        const isActive = code === lang;
-                        let base = pathname;
-                        if (base.startsWith('/en')) {
-                            base = base.substring(3) || '/';
-                        } else if (base.startsWith('/de')) {
-                            base = base.substring(3) || '/';
-                        }
-                        const href = code === 'bg' ? base : `/${code}${base === '/' ? '' : base}`;
-                        
-                        return (
-                            <a
-                                href={href}
-                                class={`font-bold border rounded px-3 py-1.5 text-sm transition-colors ${
-                                    isActive
-                                        ? "bg-orange-700 text-white border-orange-700"
-                                        : "text-slate-600 border-slate-200"
-                                }`}
-                            >
-                                {label}
-                            </a>
-                        );
-                    })}
-                </div>
             </div>
         </header>
 
