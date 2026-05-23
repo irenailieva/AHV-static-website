@@ -111,11 +111,11 @@ export async function fetchAnimals() {
 
         await Promise.all(downloadPromises);
 
-        // 5. Sort - Animals with images first
+        // 5. Sort - Animals with images first, then alphabetically
         animals.sort((a, b) => {
             if (a.imageUrl && !b.imageUrl) return -1;
             if (!a.imageUrl && b.imageUrl) return 1;
-            return 0;
+            return a.name.localeCompare(b.name, 'bg');
         });
 
         return animals;
