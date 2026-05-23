@@ -62,6 +62,7 @@ export async function fetchAnimals() {
 
             return {
                 name: line[1] || 'Неизвестно',
+                nameEn: line[2] || line[1] || 'Unknown',
                 sex: line[3] || 'Не е посочен',
                 birthday: line[4] ? line[4].slice(-4) : 'Неизвестна',
                 facebookLink: fbLink,

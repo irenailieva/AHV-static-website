@@ -15,6 +15,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 interface Props {
     page: Page<{
         name: string;
+        nameEn: string;
         sex: string;
         birthday: string;
         description: string;
@@ -63,7 +64,7 @@ const translateBirthday = (bday: string) => {
                         {animal.imageUrl && images[animal.imageUrl] ? (
                             <Image 
                                 src={images[animal.imageUrl]()} 
-                                alt={animal.name}
+                                alt={animal.nameEn}
                                 width={800}
                                 height={600}
                                 format="webp" 
@@ -85,7 +86,7 @@ const translateBirthday = (bday: string) => {
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
                         <div class="flex items-center gap-4 mb-6 pb-4 border-b border-slate-100">
-                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.name}</h3>
+                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.nameEn}</h3>
                         </div>
                         <div class="space-y-3 mb-8">
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
