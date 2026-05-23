@@ -3,7 +3,7 @@ import { fetchAnimals } from '../src/lib/fetchAnimals.js';
 console.log('🚀 Starting pre-build image synchronization...');
 fetchAnimals()
     .then(animals => {
-        const withImages = animals.filter(a => a.imageUrl && a.imageUrl.startsWith('/images/animals/')).length;
+        const withImages = animals.filter(a => a.imageUrl && a.imageUrl.startsWith('/src/assets/animals/')).length;
         console.log(`✅ Sync complete. Found ${animals.length} animals, ${withImages} have local images.`);
         process.exit(0);
     })

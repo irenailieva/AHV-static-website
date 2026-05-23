@@ -89,7 +89,7 @@ export async function fetchAnimals() {
         }
 
         // 3. Prepare directory for images
-        const publicDir = path.join(process.cwd(), 'public', 'images', 'animals');
+        const publicDir = path.join(process.cwd(), 'src', 'assets', 'animals');
         if (!fs.existsSync(publicDir)) {
             fs.mkdirSync(publicDir, { recursive: true });
         }
@@ -104,7 +104,7 @@ export async function fetchAnimals() {
                 const localFilePath = path.join(publicDir, localFileName);
 
                 downloadPromises.push(downloadImage(fileId, localFilePath));
-                animal.imageUrl = `/images/animals/${localFileName}`;
+                animal.imageUrl = `/src/assets/animals/${localFileName}`;
             }
             return animal;
         });
