@@ -2,9 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 async function downloadImage(fileId, localPath) {
-    if (fs.existsSync(localPath)) {
-        return true; // Вече съществува
-    }
+    // Always download to ensure we get the latest edited version from Google Drive
 
     const apiKey = typeof process !== 'undefined' ? process.env.GOOGLE_DRIVE_API_KEY : null;
     if (apiKey) {
