@@ -108,25 +108,28 @@ const translateBirthday = (bday: string) => {
 
         <!-- Pagination Controls -->
         {page.lastPage > 1 && (
-            <div class="mt-16 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <div class="mt-16 flex items-center justify-center space-x-2 sm:space-x-4">
                 {page.url.prev ? (
                     <a 
                         href={page.url.prev} 
-                        class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors"
+                        class="px-3 sm:px-5 py-2 sm:py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors flex items-center justify-center"
+                        aria-label="Previous page"
                     >
-                        Previous
+                        <span class="hidden sm:inline">Previous</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </a>
                 ) : (
-                    <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-600 font-medium rounded-lg cursor-not-allowed">
-                        Previous
+                    <span class="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed flex items-center justify-center">
+                        <span class="hidden sm:inline">Previous</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </span>
                 )}
 
-                <div class="flex space-x-2">
-                    <span class="px-4 py-2 bg-orange-700 text-white font-bold rounded-lg">
+                <div class="flex space-x-1 sm:space-x-2 items-center">
+                    <span class="px-3 sm:px-4 py-2 bg-orange-700 text-white font-bold rounded-lg text-sm sm:text-base">
                         {page.currentPage}
                     </span>
-                    <span class="px-4 py-2 text-slate-700 font-medium">
+                    <span class="px-2 sm:px-4 py-2 text-slate-700 font-medium text-sm sm:text-base">
                         of {page.lastPage}
                     </span>
                 </div>
@@ -134,13 +137,16 @@ const translateBirthday = (bday: string) => {
                 {page.url.next ? (
                     <a 
                         href={page.url.next} 
-                        class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors"
+                        class="px-3 sm:px-5 py-2 sm:py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors flex items-center justify-center"
+                        aria-label="Next page"
                     >
-                        Next
+                        <span class="hidden sm:inline">Next</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </a>
                 ) : (
-                    <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-600 font-medium rounded-lg cursor-not-allowed">
-                        Next
+                    <span class="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed flex items-center justify-center">
+                        <span class="hidden sm:inline">Next</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </span>
                 )}
             </div>
