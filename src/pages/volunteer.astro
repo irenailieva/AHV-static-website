@@ -19,7 +19,9 @@ import catImage from "../assets/CAT.jpg";
     </div>
 
     <!-- Full-width banner -->
-    <div class="w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden bg-slate-200 animate-pulse relative banner-container">
+    <div
+        class="w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden bg-slate-200 animate-pulse relative banner-container"
+    >
         <Image
             src={catImage}
             alt="Доброволци"
@@ -29,19 +31,23 @@ import catImage from "../assets/CAT.jpg";
             loading="eager"
             fetchpriority="high"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none"></div>
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none"
+        >
+        </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const bannerImg = document.querySelector(".hero-banner-img");
             const container = document.querySelector(".banner-container");
-            
+
             if (bannerImg) {
                 const revealImage = () => {
                     requestAnimationFrame(() => {
                         bannerImg.classList.remove("opacity-0");
-                        if (container) container.classList.remove("animate-pulse");
+                        if (container)
+                            container.classList.remove("animate-pulse");
                     });
                 };
 
@@ -55,47 +61,85 @@ import catImage from "../assets/CAT.jpg";
     </script>
 
     <!-- Text content section -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-24 relative z-10 mb-12">
-        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 reveal reveal-up delay-100">
+    <div
+        class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-24 relative z-10 mb-12"
+    >
+        <div
+            class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 reveal reveal-up delay-100"
+        >
             <div class="text-center mb-10">
-                <h2 class="text-2xl md:text-4xl font-extrabold text-slate-900 mb-6">
+                <h2
+                    class="text-2xl md:text-4xl font-extrabold text-slate-900 mb-6"
+                >
                     Неделните ни срещи
                 </h2>
                 <p class="text-lg md:text-xl text-slate-600">
-                    Всяка неделя сутрин е специално време за нас и нашите четириноги приятели. Събираме се, за да организираме транспорта, да разпределим задачите и да се отправим към приюта.
+                    Всяка неделя сутрин е специално време за нас и нашите
+                    четириноги приятели. Събираме се, за да организираме
+                    транспорта, да разпределим задачите и да се отправим към
+                    приюта.
                 </p>
             </div>
 
-            <div class="bg-orange-50 rounded-2xl mb-10 text-center border border-orange-100 overflow-hidden shadow-sm">
-                <img src="/Varna_Cathedral.JPG" alt="Катедрален храм Успение Богородично, Варна" class="w-full h-48 sm:h-64 object-cover" />
+            <div
+                class="bg-orange-50 rounded-2xl mb-10 text-center border border-orange-100 overflow-hidden shadow-sm"
+            >
+                <img src="/Varna_Cathedral.JPG" alt="Катедрален храм „Успение Богородично“, Варна" class="w-full h-48 sm:h-64 object-cover" />
                 <div class="p-8">
-                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-4 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-orange-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <h3
+                        class="text-xl md:text-2xl font-bold text-slate-900 mb-4 flex items-center justify-center"
+                    >
+                        <svg
+                            class="w-8 h-8 text-orange-700 mr-3"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
                         </svg>
-                        Време и Място
+                        Време и място
                     </h3>
-                    <p class="text-xl md:text-2xl font-extrabold text-orange-700 mb-2">
+                    <p
+                        class="text-xl md:text-2xl font-extrabold text-orange-700 mb-2"
+                    >
                         Всяка неделя от 08:30 ч.
                     </p>
                     <p class="text-base md:text-lg text-slate-700">
-                        Пред Катедралния храм "Успение Богородично" (Катедралата), гр. Варна.
+                        Пред Катедралния храм „Успение Богородично“
+                        (Катедралата), гр. Варна.
                     </p>
                 </div>
             </div>
 
-            <p class="text-base md:text-lg text-slate-600 text-center leading-relaxed">
-                Ако искате да дойдете и да помогнете с почистването, храненето и обгрижването на животните, моля, свържете се с нас предварително — пишете ни на 
-                <a href="https://facebook.com/animalhope.varna" target="_blank" rel="noopener noreferrer" class="text-orange-700 font-bold hover:underline">Facebook страницата</a>
-                или изпратете имейл на 
-                <a href="mailto:animal.hope.varna.bg@gmail.com" class="text-orange-700 font-bold hover:underline">animal.hope.varna.bg@gmail.com</a>.
-                Елате с удобно облекло, което не ви е жал да изцапате.
+            <p
+                class="text-base md:text-lg text-slate-600 text-center leading-relaxed"
+            >
+                Ако искате да дойдете и да помогнете с почистването, храненето и
+                обгрижването на животните, моля, свържете се с нас предварително
+                — пишете ни на
+                <a
+                    href="https://facebook.com/animalhope.varna"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-orange-700 font-bold hover:underline"
+                    >Facebook страницата</a
+                >
+                или изпратете имейл на
+                <a
+                    href="mailto:animal.hope.varna.bg@gmail.com"
+                    class="text-orange-700 font-bold hover:underline"
+                    >animal.hope.varna.bg@gmail.com</a
+                >. Елате с удобно облекло, което не ви е жал да изцапате.
             </p>
         </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-
         <!-- Volunteering Section -->
         <div
             class="bg-slate-50 rounded-3xl p-8 md:p-12 border border-slate-100"
@@ -104,7 +148,9 @@ import catImage from "../assets/CAT.jpg";
                 <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
                     Какво прави един доброволец?
                 </h2>
-                <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+                <p
+                    class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto"
+                >
                     Доброволчеството при нас е свързано с доста работа, но и с
                     безкрайна благодарност от страна на животните.
                 </p>

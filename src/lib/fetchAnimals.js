@@ -43,7 +43,7 @@ export async function fetchAnimals() {
     const SHEET_ID = '1crxL8WwDDgkKMA8TerCoy2ZVJG7hfIF8UD6Ek4uq-1E'; // Реално ID на таблицата
     const IMAGES_GID = '1836292053'; // Въведете GID-а на таб "Images"
 
-    const MAIN_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+    const MAIN_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=animals-copy`;
     const IMAGES_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${IMAGES_GID}`;
 
     try {
@@ -62,7 +62,7 @@ export async function fetchAnimals() {
             line[0].trim() !== '' &&
             !isNaN(Number(line[0].trim()))
         ).map(line => {
-            let fbLink = line[10] || 'https://facebook.com/animalhope.varna';
+            let fbLink = line[9] || 'https://facebook.com/animalhope.varna';
             if (fbLink.length < 15 && !fbLink.includes('http')) {
                 fbLink = 'https://facebook.com/animalhope.varna';
             }
