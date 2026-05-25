@@ -30,8 +30,15 @@ const pathname = Astro.url.pathname;
             rel="stylesheet"
         />
         <style is:global>
+            @font-face {
+                font-family: "Twemoji Country Flags";
+                unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065-E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+                src: url("https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2") format("woff2");
+                font-display: swap;
+            }
+
             body {
-                font-family: "Montserrat", sans-serif;
+                font-family: "Twemoji Country Flags", "Montserrat", sans-serif;
                 font-weight: 500;
             }
             h1,
@@ -131,7 +138,7 @@ const pathname = Astro.url.pathname;
                                             }`}
                                             title={label}
                                         >
-                                            <img src={`https://flagcdn.com/w20/${code === 'en' ? 'gb' : code}.png`} width="20" alt={code} class="shadow-[0_0_2px_rgba(0,0,0,0.3)] rounded-sm" />
+                                            <span class="text-lg leading-none">{code === 'bg' ? '🇧🇬' : code === 'en' ? '🇬🇧' : '🇩🇪'}</span>
                                             <span>{label}</span>
                                         </a>
                                     );
