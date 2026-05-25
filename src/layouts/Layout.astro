@@ -43,10 +43,6 @@ const pathname = Astro.url.pathname;
                 font-weight: 800 !important;
             }
         </style>
-        <script>
-            import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
-            polyfillCountryFlagEmojis("Twemoji Mozilla", "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiMozilla.woff2");
-        </script>
     </head>
     <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
         <header class="bg-white shadow-sm sticky top-0 z-50">
@@ -115,15 +111,15 @@ const pathname = Astro.url.pathname;
                             return (
                                 <a
                                     href={href}
-                                    class={`flex items-center font-bold border rounded px-1.5 sm:px-2.5 py-1 transition-colors ${
+                                    class={`flex items-center font-bold border rounded px-2 sm:px-3 py-1.5 transition-colors ${
                                         isActive
                                             ? "bg-orange-700 text-white border-orange-700"
                                             : "text-slate-600 border-slate-200 hover:border-orange-700 hover:text-orange-700"
                                     }`}
                                     title={label}
                                 >
-                                    <span class="text-lg leading-none">{label.split(' ')[0]}</span>
-                                    <span class="hidden sm:inline text-sm ml-1">{label.split(' ')[1]}</span>
+                                    <img src={`https://flagcdn.com/w20/${code === 'en' ? 'gb' : code}.png`} width="20" alt={code} class="inline-block shadow-[0_0_2px_rgba(0,0,0,0.3)] rounded-sm" />
+                                    <span class="text-sm ml-2">{label}</span>
                                 </a>
                             );
                         })}
