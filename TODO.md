@@ -5,3 +5,5 @@
 - [x] Use original organization vector (yet to obtain)
 - [ ] Add dog/cat filter in `adopt.astro`
 - [ ] Add all-time organization history, achievements and statistics
+- [ ] Migrate animal photos from Google Drive storage to a dedicated CDN (Cloudinary)
+
