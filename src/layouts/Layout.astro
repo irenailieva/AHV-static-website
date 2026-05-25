@@ -47,15 +47,15 @@ const pathname = Astro.url.pathname;
     <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
         <header class="bg-white shadow-sm sticky top-0 z-50">
             <nav
-                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center gap-2 sm:gap-4"
             >
                 <a
                     href={getRelativeLocaleUrl(lang, '/')}
-                    class="flex items-center"
+                    class="flex items-center flex-shrink min-w-0"
                 >
                     <img
                         src="/logo_AHV.svg"
-                        class="h-5 sm:h-6 md:h-7 w-auto object-contain"
+                        class="w-[clamp(140px,20vw,240px)] h-auto object-contain transition-all duration-300"
                         alt="Animal Hope Varna Logo"
                         fetchpriority="high"
                         loading="eager"
