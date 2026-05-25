@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 
 async function downloadImage(fileId, localPath) {
-    // Always download to ensure we get the latest edited version from Google Drive
+    // Skip download if the file already exists locally to speed up build/dev, unless FORCE_IMAGE_SYNC is set
+    if (fs.existsSync(localPath) && fs.statSync(localPath).size > 0 && !process.env.FORCE_IMAGE_SYNC) {
+        return true;
+    }
 
     const apiKey = typeof process !== 'undefined' ? process.env.GOOGLE_DRIVE_API_KEY : null;
     if (apiKey) {
@@ -107,6 +110,8 @@ export async function fetchAnimals() {
                 const localFileName = `${fileId}.jpg`;
                 const localFilePath = path.join(publicDir, localFileName);
 
+                const needsDownload = !(fs.existsSync(localFilePath) && fs.statSync(localFilePath).size > 0 && !process.env.FORCE_IMAGE_SYNC);
+
                 const success = await downloadImage(fileId, localFilePath);
                 if (success || fs.existsSync(localFilePath)) {
                     animal.imageUrl = `/src/assets/animals/${localFileName}`;
@@ -114,8 +119,10 @@ export async function fetchAnimals() {
                     animal.imageUrl = null;
                 }
                 
-                // Add a small delay between downloads
-                await new Promise(res => setTimeout(res, 200));
+                // Add a small delay between downloads only if we actually did a download
+                if (needsDownload) {
+                    await new Promise(res => setTimeout(res, 200));
+                }
             }
         }
 
