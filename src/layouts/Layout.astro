@@ -96,33 +96,48 @@ const pathname = Astro.url.pathname;
                         >
                     </div>
                     
-                    <!-- Language Switchers (Always Visible) -->
-                    <div class="flex gap-1 sm:gap-2">
-                        {Object.entries(languages).map(([code, label]) => {
-                            const isActive = code === lang;
-                            let base = pathname;
-                            if (base.startsWith('/en')) {
-                                base = base.substring(3) || '/';
-                            } else if (base.startsWith('/de')) {
-                                base = base.substring(3) || '/';
-                            }
-                            const href = code === 'bg' ? base : `/${code}${base === '/' ? '' : base}`;
-                            
-                            return (
-                                <a
-                                    href={href}
-                                    class={`flex items-center font-bold border rounded px-2 sm:px-3 py-1.5 transition-colors ${
-                                        isActive
-                                            ? "bg-orange-700 text-white border-orange-700"
-                                            : "text-slate-600 border-slate-200 hover:border-orange-700 hover:text-orange-700"
-                                    }`}
-                                    title={label}
-                                >
-                                    <img src={`https://flagcdn.com/w20/${code === 'en' ? 'gb' : code}.png`} width="20" alt={code} class="inline-block shadow-[0_0_2px_rgba(0,0,0,0.3)] rounded-sm" />
-                                    <span class="text-sm ml-2">{label}</span>
-                                </a>
-                            );
-                        })}
+                    <!-- Language Switcher Dropdown -->
+                    <div class="relative group flex items-center">
+                        <button class="flex items-center gap-1.5 text-slate-600 hover:text-orange-700 font-medium transition-colors p-2 rounded-md focus:outline-none">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="uppercase font-bold text-sm">{lang}</span>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-orange-700 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="absolute right-0 top-full mt-1 w-36 bg-white rounded-xl shadow-xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right scale-95 group-hover:scale-100 z-50 overflow-hidden">
+                            <div class="py-1">
+                                {Object.entries(languages).map(([code, label]) => {
+                                    const isActive = code === lang;
+                                    let base = pathname;
+                                    if (base.startsWith('/en')) {
+                                        base = base.substring(3) || '/';
+                                    } else if (base.startsWith('/de')) {
+                                        base = base.substring(3) || '/';
+                                    }
+                                    const href = code === 'bg' ? base : `/${code}${base === '/' ? '' : base}`;
+                                    
+                                    return (
+                                        <a
+                                            href={href}
+                                            class={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                                                isActive
+                                                    ? "bg-orange-50 text-orange-700 font-bold"
+                                                    : "text-slate-600 hover:bg-slate-50 hover:text-orange-700"
+                                            }`}
+                                            title={label}
+                                        >
+                                            <img src={`https://flagcdn.com/w20/${code === 'en' ? 'gb' : code}.png`} width="20" alt={code} class="shadow-[0_0_2px_rgba(0,0,0,0.3)] rounded-sm" />
+                                            <span>{label}</span>
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Mobile Menu Button -->
