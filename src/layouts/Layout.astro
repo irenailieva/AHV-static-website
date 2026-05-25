@@ -43,6 +43,10 @@ const pathname = Astro.url.pathname;
                 font-weight: 800 !important;
             }
         </style>
+        <script>
+            import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
+            polyfillCountryFlagEmojis("Twemoji Mozilla", "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiMozilla.woff2");
+        </script>
     </head>
     <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
         <header class="bg-white shadow-sm sticky top-0 z-50">
