@@ -21,6 +21,12 @@ async function downloadImage(fileId, localPath) {
             return false;
         }
 
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('text/html')) {
+            console.error(`Грешка: Google Drive върна HTML (възможно ограничение или предупреждение) за файл ${fileId}.`);
+            return false;
+        }
+
         const arrayBuffer = await response.arrayBuffer();
         fs.writeFileSync(localPath, Buffer.from(arrayBuffer));
         return true;
@@ -93,22 +99,25 @@ export async function fetchAnimals() {
             fs.mkdirSync(publicDir, { recursive: true });
         }
 
-        // 4. Merge and download
-        const downloadPromises = [];
-        animals = animals.map(animal => {
+        // 4. Merge and download sequentially to avoid rate limits
+        for (let animal of animals) {
             const nameKey = animal.name.trim().toLowerCase();
             if (imageMap.has(nameKey)) {
                 const fileId = imageMap.get(nameKey);
                 const localFileName = `${fileId}.jpg`;
                 const localFilePath = path.join(publicDir, localFileName);
 
-                downloadPromises.push(downloadImage(fileId, localFilePath));
-                animal.imageUrl = `/src/assets/animals/${localFileName}`;
+                const success = await downloadImage(fileId, localFilePath);
+                if (success || fs.existsSync(localFilePath)) {
+                    animal.imageUrl = `/src/assets/animals/${localFileName}`;
+                } else {
+                    animal.imageUrl = null;
+                }
+                
+                // Add a small delay between downloads
+                await new Promise(res => setTimeout(res, 200));
             }
-            return animal;
-        });
-
-        await Promise.all(downloadPromises);
+        }
 
         // 5. Sort - Animals with images first, then alphabetically
         animals.sort((a, b) => {
