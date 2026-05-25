@@ -23,6 +23,7 @@ const pathname = Astro.url.pathname;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
+        <link rel="preload" href="/logo_AHV.svg" as="image" type="image/svg+xml" fetchpriority="high" />
         <title>{title} | Animal Hope Varna</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&family=Bangers&display=swap"
@@ -56,6 +57,9 @@ const pathname = Astro.url.pathname;
                         src="/logo_AHV.svg"
                         class="h-5 sm:h-6 md:h-7 w-auto object-contain"
                         alt="Animal Hope Varna Logo"
+                        fetchpriority="high"
+                        loading="eager"
+                        decoding="sync"
                     />
                 </a>
 
