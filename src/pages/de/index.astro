@@ -12,62 +12,196 @@ import Layout from '../../layouts/Layout.astro';
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 flex flex-col items-center text-center">
             <h1 class="reveal reveal-up delay-100 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6">
-                Hoffnung schenken für <span class="text-orange-700">obdachlose Tiere</span>
+                Wir geben heimatlosen Tieren <span class="text-orange-700">Hoffnung</span>
             </h1>
             <p class="reveal reveal-up delay-200 text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10">
-                Wir sind eine Nichtregierungsorganisation, die sich der Rettung, Behandlung und Vermittlung von liebevollen Häusern für bedürftige Tiere in Varna, Bulgarien 🇧🇬 und der Region widmet.
+                Wir sind eine Nichtregierungsorganisation, die sich der Rettung, Behandlung und Vermittlung liebevoller Zuhauses für Tiere in Not in Warna, Bulgarien 🇧🇬 und der Region widmet.
             </p>
             <div class="reveal reveal-up delay-300 flex flex-col sm:flex-row gap-4">
                 <a href="/de/donate" class="inline-flex justify-center items-center px-8 py-3 border border-transparent text-base font-bold rounded-md text-white bg-orange-700 hover:bg-orange-800 transition-colors shadow-sm">
-                    Wie Sie helfen
+                    Wie kann ich helfen
                 </a>
-                <a href="/de/volunteer" class="inline-flex justify-center items-center px-8 py-3 border border-slate-300 text-base font-bold rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors">
-                    Mehr erfahren
+                <a href="/de/adopt" class="inline-flex justify-center items-center px-8 py-3 border border-slate-300 text-base font-bold rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors">
+                    Adoptiere einen Freund
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us & Mission -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal reveal-left delay-100">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Unsere Mission</h2>
+                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                        Animal Hope Varna ist eine gemeinnützige Organisation, die sich bemüht, das Bewusstsein gegen Tierquälerei zu schärfen und obdachlosen Tieren in Warna zu helfen. Wir sind ein Team aus 100% Freiwilligen, vereint durch den Wunsch, ein Leben ohne Schmerzen für diejenigen zu schaffen, die keine Stimme haben.
+                    </p>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        Wir erhalten keine staatliche Unterstützung und finanzieren uns ausschließlich durch Spenden. Jedes gerettete Tier ist ein Beweis für die Stärke unserer Gemeinschaft und Ihrer Unterstützung.
+                    </p>
+                </div>
+                <div class="reveal reveal-right delay-200 relative">
+                    <div class="aspect-w-16 aspect-h-10 rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=1200" alt="Freiwilliger umarmt einen geretteten Hund" class="object-cover w-full h-full" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Activities -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal reveal-up">
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Was wir tun</h2>
+                <p class="text-lg text-slate-600">Wir arbeiten unermüdlich daran, unseren Traum durch umfassende Tierpflege zu verwirklichen.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Vet Care -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 reveal reveal-up delay-100 group">
+                    <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Tierärztliche Hilfe</h3>
+                    <p class="text-slate-600">Wir bieten Notfallbehandlungen, lebensrettende Eingriffe und Pflege für verletzte und kranke Tiere in unseren Partnerkliniken.</p>
+                </div>
+                
+                <!-- Preventative Care -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 reveal reveal-up delay-200 group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Präventive Pflege</h3>
+                    <p class="text-slate-600">Wir kümmern uns um Mikrochips, Kastrationen, Impfungen und Entwurmungen, um ein gesundes und sicheres Leben zu gewährleisten.</p>
+                </div>
+                
+                <!-- Fostering -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 reveal reveal-up delay-300 group">
+                    <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Pflegestellen</h3>
+                    <p class="text-slate-600">Wir finden Pflegestellen für die Tiere, damit sie sich in einer häuslichen Umgebung erholen und sozialisieren können.</p>
+                </div>
+
+                <!-- Forever Homes -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 reveal reveal-up delay-400 group">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Ein neues Leben</h3>
+                    <p class="text-slate-600">Wir glauben, dass jedes Tier eine Chance verdient, und unser ultimatives Ziel ist es, verantwortungsvolle Besitzer und ein ewiges Zuhause zu finden.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adoption Process & International Reach -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row-reverse gap-12 items-center">
+                <div class="lg:w-1/2 reveal reveal-right delay-100">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Adoption und ein neues Zuhause</h2>
+                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                        Wir suchen verantwortungsbewusste Adoptanten vor allem in Bulgarien, aber mit Hilfe unserer freiwilligen Helfer im Ausland finden unsere Tiere auch ein Zuhause in Deutschland, Österreich, der Schweiz, Finnland, den Niederlanden, England und Italien.
+                    </p>
+                    <div class="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-r-lg mb-6">
+                        <h4 class="text-lg font-bold text-orange-800 mb-2">Unsere Anforderungen</h4>
+                        <p class="text-orange-700">
+                            Wir verlangen von allen potenziellen Adoptanten, einen Fragebogen auszufüllen und einen Vertrag zu unterzeichnen. Dies garantiert den besten Platz für unsere notleidenden Streuner und verhindert, dass sie auf die Straße zurückkehren.
+                        </p>
+                    </div>
+                    <p class="text-slate-600 italic text-sm">
+                        * Unsere Tiere werden nur als Haustiere abgegeben, die als Familienmitglieder behandelt werden, nicht als angekettete Wächter oder Mäusefänger.
+                    </p>
+                </div>
+                <div class="lg:w-1/2 reveal reveal-left delay-200">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=600" alt="Glücklicher adoptierter Hund" class="rounded-2xl shadow-lg object-cover h-48 sm:h-64 w-full transform translate-y-4" />
+                        <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&q=80&w=600" alt="Entspannte Katze im neuen Zuhause" class="rounded-2xl shadow-lg object-cover h-48 sm:h-64 w-full transform -translate-y-4" />
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Impact Section -->
-    <section class="relative py-16 bg-white overflow-hidden">
+    <section class="relative py-20 bg-slate-900 overflow-hidden text-white">
         <!-- Ghost Cat -->
-        <div class="reveal reveal-right delay-300 absolute left-0 md:-left-32 bottom-0 w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] pointer-events-none">
-            <div class="w-full h-full opacity-10 md:opacity-20 mix-blend-multiply bg-no-repeat bg-contain bg-bottom transform-gpu backface-hidden border-transparent" style="background-image: url('/bg-cat.png')"></div>
+        <div class="reveal reveal-right delay-300 absolute left-0 md:-left-32 bottom-0 w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] pointer-events-none opacity-20 z-0">
+            <div class="w-full h-full bg-no-repeat bg-contain bg-bottom" style="background-image: url('/bg-cat-transparent.png')"></div>
         </div>
         
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-slate-900">Was haben wir 2025 erreicht?</h2>
-                <p class="mt-4 text-lg text-slate-600">Dank Ihrer Unterstützung verändern wir jeden Tag Leben.</p>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal reveal-up">
+                <h2 class="text-3xl font-bold">Was wir 2025 erreicht haben?</h2>
+                <p class="mt-4 text-lg text-slate-300">Dank Ihrer Unterstützung verändern wir jeden Tag Leben.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-                <div class="p-6 bg-slate-50 rounded-2xl reveal reveal-up delay-100">
-                    <div class="text-4xl font-extrabold text-orange-700 mb-2">119</div>
-                    <div class="text-slate-700 font-medium">Gerettete Hunde und Katzen</div>
+                <div class="p-8 bg-slate-800/90 backdrop-blur-md rounded-2xl border border-slate-700 reveal reveal-up delay-100 hover:bg-slate-800 transition-colors shadow-xl">
+                    <div class="text-5xl font-extrabold text-orange-500 mb-3">119</div>
+                    <div class="text-slate-200 font-medium text-lg">Gerettete Hunde und Katzen</div>
                 </div>
-                <div class="p-6 bg-slate-50 rounded-2xl reveal reveal-up delay-200">
-                    <div class="text-4xl font-extrabold text-orange-700 mb-2">102</div>
-                    <div class="text-slate-700 font-medium">Adoptierte Hunde und Katzen</div>
+                <div class="p-8 bg-slate-800/90 backdrop-blur-md rounded-2xl border border-slate-700 reveal reveal-up delay-200 hover:bg-slate-800 transition-colors shadow-xl">
+                    <div class="text-5xl font-extrabold text-orange-500 mb-3">102</div>
+                    <div class="text-slate-200 font-medium text-lg">Adoptierte Hunde und Katzen</div>
                 </div>
-                <div class="p-6 bg-slate-50 rounded-2xl reveal reveal-up delay-300">
-                    <div class="text-4xl font-extrabold text-orange-700 mb-2">180</div>
-                    <div class="text-slate-700 font-medium">Kastrierte Tiere</div>
+                <div class="p-8 bg-slate-800/90 backdrop-blur-md rounded-2xl border border-slate-700 reveal reveal-up delay-300 hover:bg-slate-800 transition-colors shadow-xl">
+                    <div class="text-5xl font-extrabold text-orange-500 mb-3">180</div>
+                    <div class="text-slate-200 font-medium text-lg">Kastrierte Tiere</div>
                 </div>
-                <div class="p-6 bg-slate-50 rounded-2xl reveal reveal-up delay-400">
-                    <div class="text-4xl font-extrabold text-orange-700 mb-2">150+</div>
-                    <div class="text-slate-700 font-medium">Tiere suchen noch ein Zuhause</div>
+                <div class="p-8 bg-slate-800/90 backdrop-blur-md rounded-2xl border border-slate-700 reveal reveal-up delay-400 hover:bg-slate-800 transition-colors shadow-xl">
+                    <div class="text-5xl font-extrabold text-orange-500 mb-3">150+</div>
+                    <div class="text-slate-200 font-medium text-lg">Suchen ein dauerhaftes Zuhause</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- How You Can Help -->
+    <section class="py-20 bg-orange-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 reveal reveal-up">Jeder kann helfen</h2>
+            <p class="text-xl text-slate-600 mb-12 max-w-3xl mx-auto reveal reveal-up delay-100">
+                Unsere Arbeit ist endlos, und wir sind wenige. Wir brauchen Ihre Unterstützung. Sie müssen nicht in Bulgarien leben – wir haben Freiwillige, die uns aus der Ferne helfen.
+            </p>
+            
+            <p class="text-lg text-slate-500 mb-6 reveal reveal-up delay-200 font-medium tracking-widest uppercase">Sie können helfen, indem Sie:</p>
+            <div class="flex flex-wrap justify-center items-center gap-6 md:gap-8 mb-16 reveal reveal-up delay-200">
+                <span class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest">Adoptieren</span>
+                <span class="hidden md:block text-orange-300 text-2xl">&bull;</span>
+                <span class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest">Pflegen</span>
+                <span class="hidden md:block text-orange-300 text-2xl">&bull;</span>
+                <span class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest">Spenden</span>
+                <span class="hidden md:block text-orange-300 text-2xl">&bull;</span>
+                <span class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest">Teilen</span>
+            </div>
+
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg text-left reveal reveal-up delay-300">
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">Spendenboxen und Kliniken</h3>
+                <p class="text-slate-600 mb-0">
+                    Wir haben Verträge mit 8 Tierkliniken in Warna über Arbeit zu Vorzugsbedingungen. Dort stehen Spendenboxen bereit, über die jeder bei der Behandlung der Tiere helfen kann.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- Facebook Integration Section -->
-    <section class="relative py-16 bg-slate-900 text-white overflow-hidden">
-        
+    <section class="relative py-16 bg-blue-50 text-slate-900 overflow-hidden">
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="reveal reveal-up delay-100 text-3xl font-bold mb-6">Auf der Suche nach einem neuen Freund?</h2>
-            <p class="reveal reveal-up delay-200 text-lg text-slate-300 mb-10">
-                Alle unsere Tiere auf der Suche nach einem Zuhause sowie die neuesten Nachrichten über unsere Aktivitäten werden auf unserer offiziellen Facebook-Seite veröffentlicht. Folgen Sie uns, um Teil unserer Gemeinschaft zu werden!
+            <h2 class="reveal reveal-up delay-100 text-3xl font-bold mb-6">Suchen Sie einen neuen Freund?</h2>
+            <p class="reveal reveal-up delay-200 text-lg text-slate-600 mb-10">
+                Alle unsere Tiere, die ein Zuhause suchen, sowie die neuesten Nachrichten über unsere Aktivitäten werden auf unserer offiziellen Facebook-Seite veröffentlicht. Folgen Sie uns, um Teil unserer Gemeinschaft zu werden!
             </p>
             <a href="https://facebook.com/animalhope.varna" target="_blank" rel="noopener noreferrer" class="reveal reveal-up delay-300 inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-lg transition-colors shadow-lg">
                 <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
