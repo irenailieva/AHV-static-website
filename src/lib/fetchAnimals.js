@@ -67,13 +67,27 @@ export async function fetchAnimals() {
                 fbLink = 'https://facebook.com/animalhope.varna';
             }
 
+            let species = 'unknown';
+            const notes = (line[6] || '').toLowerCase();
+            const rawSpecies = (line[11] || '').toLowerCase().trim();
+            
+            if (rawSpecies.includes('кот') || rawSpecies.includes('cat') || notes.includes('fiv')) {
+                species = 'cat';
+            } else if (rawSpecies.includes('куч') || rawSpecies.includes('dog') || notes.includes('дироф')) {
+                species = 'dog';
+            } else {
+                // Default fallback if not specified
+                species = 'dog'; 
+            }
+
             return {
                 name: line[1] || 'Неизвестно',
                 nameEn: line[2] || line[1] || 'Unknown',
                 sex: line[3] || 'Не е посочен',
                 birthday: line[4] ? line[4].slice(-4) : 'Неизвестна',
                 facebookLink: fbLink,
-                imageUrl: null
+                imageUrl: null,
+                species: species
             };
         });
 

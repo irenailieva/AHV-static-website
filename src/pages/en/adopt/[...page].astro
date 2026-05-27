@@ -56,6 +56,19 @@ const translateBirthday = (bday: string) => {
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <a href="/en/adopt" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname === '/en/adopt' || Astro.url.pathname.startsWith('/en/adopt') && !Astro.url.pathname.includes('/dogs') && !Astro.url.pathname.includes('/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                All
+            </a>
+            <a href="/en/adopt/dogs" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/en/adopt/dogs') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Dogs
+            </a>
+            <a href="/en/adopt/cats" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/en/adopt/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Cats
+            </a>
+        </div>
+
         <!-- Animals Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {page.data.map((animal) => (

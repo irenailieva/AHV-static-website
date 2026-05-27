@@ -2,19 +2,23 @@
 import type { Page, GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 
-import Layout from '../../layouts/Layout.astro';
-import { fetchAnimals } from '../../lib/fetchAnimals.js';
+import Layout from '../../../../layouts/Layout.astro';
+import { fetchAnimals } from '../../../../lib/fetchAnimals.js';
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/animals/*.{jpeg,jpg,png,gif}');
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/animals/*.{jpeg,jpg,png,gif,webp}');
 
 export const getStaticPaths = (async ({ paginate }) => {
     const animals = await fetchAnimals();
-    return paginate(animals, { pageSize: 12 });
+    const filtered = animals.filter(a => a.species === 'cat');
+    return paginate(filtered, { pageSize: 12 });
 }) satisfies GetStaticPaths;
 
 interface Props {
     page: Page<{
         name: string;
+        nameEn: string;
+        sex: string;
+        birthday: string;
         description: string;
         imageUrl: string;
         facebookLink: string;
@@ -22,17 +26,32 @@ interface Props {
 }
 
 const { page } = Astro.props;
+
+const translateSex = (sex: string) => {
+    if (!sex) return 'Nicht angegeben';
+    const s = sex.toLowerCase();
+    if (s.includes('мъж')) return 'Männlich';
+    if (s.includes('жен')) return 'Weiblich';
+    if (s.includes('не е посочен')) return 'Nicht angegeben';
+    return sex;
+};
+
+const translateBirthday = (bday: string) => {
+    if (!bday) return 'Unbekannt';
+    if (bday.toLowerCase().includes('неизвестна')) return 'Unbekannt';
+    return bday;
+};
 ---
 
-<Layout title="Осинови">
+<Layout title="Adoptieren">
     <!-- Header -->
     <div class="bg-slate-900 py-16 text-white text-center">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-                Осинови приятел
+                Adoptiere einen Freund
             </h1>
             <p class="text-xl text-slate-300">
-                Запознайте се с нашите прекрасни животни, които си търсят дом.
+                Lerne unsere wundervollen Tiere kennen, die ein Zuhause suchen.
             </p>
         </div>
     </div>
@@ -40,14 +59,14 @@ const { page } = Astro.props;
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <!-- Filter Tabs -->
         <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <a href="/adopt" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname === '/adopt' || Astro.url.pathname.startsWith('/adopt') && !Astro.url.pathname.includes('/dogs') && !Astro.url.pathname.includes('/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-                Всички
+            <a href="/de/adopt" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname === '/de/adopt' || Astro.url.pathname.startsWith('/de/adopt') && !Astro.url.pathname.includes('/dogs') && !Astro.url.pathname.includes('/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Alle
             </a>
-            <a href="/adopt/dogs" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/adopt/dogs') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-                Кучета
+            <a href="/de/adopt/dogs" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/de/adopt/dogs') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Hunde
             </a>
-            <a href="/adopt/cats" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/adopt/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-                Котки
+            <a href="/de/adopt/cats" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/de/adopt/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Katzen
             </a>
         </div>
 
@@ -59,11 +78,10 @@ const { page } = Astro.props;
                         {animal.imageUrl && images[animal.imageUrl] ? (
                             <Image 
                                 src={images[animal.imageUrl]()} 
-                                alt={animal.name} 
+                                alt={animal.nameEn}
                                 width={800}
                                 height={600}
-                                format="webp"
-                                quality={80}
+                                format="webp" 
                                 class="w-full h-full object-cover opacity-0 transition-opacity duration-700 ease-in-out"
                                 loading="lazy"
                                 onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('animate-pulse');"
@@ -75,28 +93,28 @@ const { page } = Astro.props;
                                     <circle cx="9" cy="9" r="2"/>
                                     <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
                                 </svg>
-                                <span class="text-sm font-medium">Няма снимка</span>
+                                <span class="text-sm font-medium">Kein Bild</span>
                             </div>
                         )}
                         <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors pointer-events-none"></div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
                         <div class="flex items-center gap-4 mb-6 pb-4 border-b border-slate-100">
-                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.name}</h3>
+                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.nameEn}</h3>
                         </div>
                         <div class="space-y-3 mb-8">
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
-                                <span class="font-bold text-sm uppercase tracking-wide">Пол</span>
-                                <span class="font-medium">{animal.sex}</span>
+                                <span class="font-bold text-sm uppercase tracking-wide">Geschlecht</span>
+                                <span class="font-medium">{translateSex(animal.sex)}</span>
                             </div>
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
-                                <span class="font-bold text-sm uppercase tracking-wide">Роден/а</span>
-                                <span class="font-medium">{animal.birthday}</span>
+                                <span class="font-bold text-sm uppercase tracking-wide">Geboren</span>
+                                <span class="font-medium">{translateBirthday(animal.birthday)}</span>
                             </div>
                         </div>
                     </div>
                     <a href={animal.facebookLink} target="_blank" rel="noopener noreferrer" class="block text-center w-full py-3 px-4 bg-orange-700 text-white font-bold rounded-xl hover:bg-orange-800 transition-colors mt-auto shadow-sm">
-                        Вижте във Facebook
+                        Auf Facebook ansehen
                     </a>
                 </div>
             ))}
@@ -109,14 +127,14 @@ const { page } = Astro.props;
                     <a 
                         href={page.url.prev} 
                         class="px-3 sm:px-5 py-2 sm:py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors flex items-center justify-center"
-                        aria-label="Предишна страница"
+                        aria-label="Vorherige Seite"
                     >
-                        <span class="hidden sm:inline">Предишна</span>
+                        <span class="hidden sm:inline">Zurück</span>
                         <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </a>
                 ) : (
                     <span class="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed flex items-center justify-center">
-                        <span class="hidden sm:inline">Предишна</span>
+                        <span class="hidden sm:inline">Zurück</span>
                         <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </span>
                 )}
@@ -126,7 +144,7 @@ const { page } = Astro.props;
                         {page.currentPage}
                     </span>
                     <span class="px-2 sm:px-4 py-2 text-slate-700 font-medium text-sm sm:text-base">
-                        от {page.lastPage}
+                        von {page.lastPage}
                     </span>
                 </div>
 
@@ -134,14 +152,14 @@ const { page } = Astro.props;
                     <a 
                         href={page.url.next} 
                         class="px-3 sm:px-5 py-2 sm:py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors flex items-center justify-center"
-                        aria-label="Следваща страница"
+                        aria-label="Nächste Seite"
                     >
-                        <span class="hidden sm:inline">Следваща</span>
+                        <span class="hidden sm:inline">Weiter</span>
                         <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </a>
                 ) : (
                     <span class="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed flex items-center justify-center">
-                        <span class="hidden sm:inline">Следваща</span>
+                        <span class="hidden sm:inline">Weiter</span>
                         <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </span>
                 )}

@@ -2,14 +2,15 @@
 import type { Page, GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 
-import Layout from '../../layouts/Layout.astro';
-import { fetchAnimals } from '../../lib/fetchAnimals.js';
+import Layout from '../../../layouts/Layout.astro';
+import { fetchAnimals } from '../../../lib/fetchAnimals.js';
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/animals/*.{jpeg,jpg,png,gif}');
 
 export const getStaticPaths = (async ({ paginate }) => {
     const animals = await fetchAnimals();
-    return paginate(animals, { pageSize: 12 });
+    const filtered = animals.filter(a => a.species === 'cat');
+    return paginate(filtered, { pageSize: 12 });
 }) satisfies GetStaticPaths;
 
 interface Props {
