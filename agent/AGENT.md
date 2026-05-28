@@ -66,3 +66,23 @@ Technical Requirements:
         Use the font family and color palette established in the Hero section. Ensure 100/100 accessibility (contrast ratios).
 
 Action: Please generate the fetchAnimals.js utility and the [...page].astro component with the grid and pagination logic. Use placeholder Google Sheet ID for now.
+
+Role: Agentic AI Assistant
+
+Objective: Maintain Localization and Feature Parity Across Languages.
+
+Technical Requirements:
+
+    Localization & Feature Sync:
+    When modifying any page or component, systematically check if the exact same feature, bug fix, or UI change needs to be applied to all language versions.
+
+    The project currently supports three languages:
+    - Bulgarian (BG): `src/pages/` (default)
+    - English (EN): `src/pages/en/`
+    - German (DE): `src/pages/de/`
+
+    Critical Workflow Checklist:
+    1. Identify the Scope: Does this change affect a page that has localized versions?
+    2. Apply Systematically: If yes, apply the exact same logic, HTML structure, or Astro component updates to the corresponding `en` and `de` pages.
+    3. Preserve Translations: When syncing structural or logic changes to localized files, be extremely careful to preserve the existing localized text (do not accidentally paste Bulgarian text into English or German files).
+    4. Final Verification: Before committing or concluding your task, double-check that all three language versions (`bg`, `en`, `de`) have the newest features and load assets correctly.

@@ -1,8 +1,11 @@
 ---
 import type { Page, GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
 
 import Layout from '../../../layouts/Layout.astro';
 import { fetchAnimals } from '../../../lib/fetchAnimals.js';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/animals/*.{jpeg,jpg,png,gif,webp}');
 
 export const getStaticPaths = (async ({ paginate }) => {
     const animals = await fetchAnimals();
@@ -12,6 +15,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 interface Props {
     page: Page<{
         name: string;
+        nameEn: string;
         sex: string;
         birthday: string;
         description: string;
@@ -52,15 +56,31 @@ const translateBirthday = (bday: string) => {
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <a href="/en/adopt" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname === '/en/adopt' || Astro.url.pathname.startsWith('/en/adopt') && !Astro.url.pathname.includes('/dogs') && !Astro.url.pathname.includes('/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                All
+            </a>
+            <a href="/en/adopt/dogs" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/en/adopt/dogs') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Dogs
+            </a>
+            <a href="/en/adopt/cats" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/en/adopt/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Cats
+            </a>
+        </div>
+
         <!-- Animals Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {page.data.map((animal) => (
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col h-full transition-transform hover:-translate-y-1 hover:shadow-md">
                     <div class={`aspect-[4/3] w-full bg-slate-200 overflow-hidden relative group ${animal.imageUrl ? 'animate-pulse' : ''}`}>
-                        {animal.imageUrl ? (
-                            <img 
-                                src={animal.imageUrl} 
-                                alt={animal.name} 
+                        {animal.imageUrl && images[animal.imageUrl] ? (
+                            <Image 
+                                src={images[animal.imageUrl]()} 
+                                alt={animal.nameEn}
+                                width={800}
+                                height={600}
+                                format="webp" 
                                 class="w-full h-full object-cover opacity-0 transition-opacity duration-700 ease-in-out"
                                 loading="lazy"
                                 onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('animate-pulse');"
@@ -79,7 +99,7 @@ const translateBirthday = (bday: string) => {
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
                         <div class="flex items-center gap-4 mb-6 pb-4 border-b border-slate-100">
-                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.name}</h3>
+                            <h3 class="text-2xl font-extrabold text-slate-900">{animal.nameEn}</h3>
                         </div>
                         <div class="space-y-3 mb-8">
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-slate-700 bg-slate-50 px-4 py-2 rounded-lg">
@@ -101,25 +121,28 @@ const translateBirthday = (bday: string) => {
 
         <!-- Pagination Controls -->
         {page.lastPage > 1 && (
-            <div class="mt-16 flex items-center justify-center space-x-4">
+            <div class="mt-16 flex items-center justify-center space-x-2 sm:space-x-4">
                 {page.url.prev ? (
                     <a 
                         href={page.url.prev} 
-                        class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors"
+                        class="px-3 sm:px-5 py-2 sm:py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors flex items-center justify-center"
+                        aria-label="Previous page"
                     >
-                        Previous
+                        <span class="hidden sm:inline">Previous</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </a>
                 ) : (
-                    <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-600 font-medium rounded-lg cursor-not-allowed">
-                        Previous
+                    <span class="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed flex items-center justify-center">
+                        <span class="hidden sm:inline">Previous</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </span>
                 )}
 
-                <div class="flex space-x-2">
-                    <span class="px-4 py-2 bg-orange-700 text-white font-bold rounded-lg">
+                <div class="flex space-x-1 sm:space-x-2 items-center">
+                    <span class="px-3 sm:px-4 py-2 bg-orange-700 text-white font-bold rounded-lg text-sm sm:text-base">
                         {page.currentPage}
                     </span>
-                    <span class="px-4 py-2 text-slate-700 font-medium">
+                    <span class="px-2 sm:px-4 py-2 text-slate-700 font-medium text-sm sm:text-base">
                         of {page.lastPage}
                     </span>
                 </div>
@@ -127,13 +150,16 @@ const translateBirthday = (bday: string) => {
                 {page.url.next ? (
                     <a 
                         href={page.url.next} 
-                        class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors"
+                        class="px-3 sm:px-5 py-2 sm:py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:text-orange-700 transition-colors flex items-center justify-center"
+                        aria-label="Next page"
                     >
-                        Next
+                        <span class="hidden sm:inline">Next</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </a>
                 ) : (
-                    <span class="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-600 font-medium rounded-lg cursor-not-allowed">
-                        Next
+                    <span class="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 text-slate-400 font-medium rounded-lg cursor-not-allowed flex items-center justify-center">
+                        <span class="hidden sm:inline">Next</span>
+                        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </span>
                 )}
             </div>
