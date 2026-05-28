@@ -15,6 +15,72 @@ import Layout from "../../layouts/Layout.astro";
     </div>
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+        <!-- SMS Donation -->
+        <section
+            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
+        >
+            <h2
+                class="text-2xl font-bold text-slate-900 mb-6 flex items-center"
+            >
+                <svg
+                    class="w-8 h-8 text-orange-700 mr-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                    ></path>
+                </svg>
+                DMS SMS Donation
+            </h2>
+            <div
+                class="bg-orange-50 border border-orange-100 p-6 rounded-xl text-center"
+            >
+                <p class="text-lg text-slate-700 mb-2">Send an SMS with text</p>
+                <div
+                    class="text-3xl font-extrabold text-orange-700 tracking-wider mb-2"
+                >
+                    DMS ANIMAL
+                </div>
+                <p class="text-lg text-slate-700 mb-4">to number</p>
+                <div
+                    class="text-3xl font-extrabold text-slate-900 tracking-wider mb-6"
+                >
+                    17 777
+                </div>
+                <p class="text-sm text-slate-700">
+                    Donate via SMS from 1.02 EUR / 2 BGN. Subscribe for a monthly SMS donation of 2.56 EUR or 5.11 EUR / 5 or 10 BGN. (Available for Bulgarian mobile operators)
+                </p>
+            </div>
+        </section>
+
+        <!-- Virtual Adoption -->
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                <svg class="w-8 h-8 text-teal-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                </svg>
+                Virtual Adoption
+            </h2>
+            <div class="bg-teal-50 border border-teal-100 p-6 rounded-xl">
+                <p class="text-slate-700 mb-4">
+                    You can't take an animal home, but you want to help? You can become a <strong>virtual adopter</strong>!
+                </p>
+                <p class="text-slate-700 mb-4">
+                    With a monthly donation, you take care of a dog or cat of your choice, covering their food and deworming expenses. In return, you will receive regular photos, videos, and updates about your virtual pet.
+                </p>
+                <div class="mt-6">
+                    <a href="/en/adopt" class="inline-flex items-center px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
+                        Choose an animal
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Bank Transfer -->
         <section
             class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
@@ -113,72 +179,20 @@ import Layout from "../../layouts/Layout.astro";
             </p>
         </section>
 
-        <!-- SMS Donation -->
+        <!-- Material Donations -->
         <section
             class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
         >
-            <h2
-                class="text-2xl font-bold text-slate-900 mb-6 flex items-center"
-            >
-                <svg
-                    class="w-8 h-8 text-orange-700 mr-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                    ></path>
-                </svg>
-                DMS SMS Donation
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">
+                Material Donations
             </h2>
-            <div
-                class="bg-orange-50 border border-orange-100 p-6 rounded-xl text-center"
-            >
-                <p class="text-lg text-slate-700 mb-2">Send an SMS with text</p>
-                <div
-                    class="text-3xl font-extrabold text-orange-700 tracking-wider mb-2"
-                >
-                    DMS ANIMAL
-                </div>
-                <p class="text-lg text-slate-700 mb-4">to number</p>
-                <div
-                    class="text-3xl font-extrabold text-slate-900 tracking-wider mb-6"
-                >
-                    17 777
-                </div>
-                <p class="text-sm text-slate-700">
-                    Donate via SMS from 1.02 EUR / 2 BGN. Subscribe for a monthly SMS donation of 2.56 EUR or 5.11 EUR / 5 or 10 BGN. (Available for Bulgarian mobile operators)
-                </p>
-            </div>
+            <p class="text-slate-600 mb-4">
+                We are always in need of dry and wet food, cat litter (pellets and bentonite), deworming treatments, general veterinary medications, beds, and cat trees.
+            </p>
+            <p class="text-slate-600">
+                You can bring your donations every Sunday to our meeting point in front of the Cathedral, drop them off at our partner veterinary clinic, or contact us to explicitly schedule a drop-off.
+            </p>
         </section>
-
-        <!-- Virtual Adoption -->
-        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-            <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center">
-                <svg class="w-8 h-8 text-teal-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                </svg>
-                Virtual Adoption
-            </h2>
-            <div class="bg-teal-50 border border-teal-100 p-6 rounded-xl">
-                <p class="text-slate-700 mb-4">
-                    You can't take an animal home, but you want to help? You can become a <strong>virtual adopter</strong>!
-                </p>
-                <p class="text-slate-700 mb-4">
-                    With a monthly donation of <strong>30 BGN (approx. 15 EUR)</strong>, you take care of a dog or cat of your choice, covering their food and deworming expenses. In return, you will receive regular photos, videos, and updates about your virtual pet.
-                </p>
-                <div class="mt-6">
-                    <a href="/en/adopt" class="inline-flex items-center px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
-                        Choose an animal
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <!-- Econt -->
         <!-- Veterinary Clinic -->
         <section
@@ -240,19 +254,5 @@ import Layout from "../../layouts/Layout.astro";
             </div>
         </section>
 
-        <!-- Material Donations -->
-        <section
-            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100"
-        >
-            <h2 class="text-2xl font-bold text-slate-900 mb-4">
-                Material Donations
-            </h2>
-            <p class="text-slate-600 mb-4">
-                We are always in need of dry and wet food, cat litter (pellets and bentonite), deworming treatments, general veterinary medications, beds, and cat trees.
-            </p>
-            <p class="text-slate-600">
-                You can bring your donations every Sunday to our meeting point in front of the Cathedral, drop them off at our partner veterinary clinic, or contact us to explicitly schedule a drop-off.
-            </p>
-        </section>
     </div>
 </Layout>

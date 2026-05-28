@@ -55,6 +55,10 @@ export async function fetchAnimals() {
         const mainCsvText = await mainResponse.text();
         const mainRows = csvToArray(mainCsvText);
 
+        const headerRow = mainRows[0] || [];
+        const speciesColIndex = headerRow.findIndex(col => col.trim().toLowerCase() === 'species' || col.trim().toLowerCase() === 'вид');
+        const sIdx = speciesColIndex >= 0 ? speciesColIndex : 11;
+
         // Map to objects
         let animals = mainRows.slice(1).filter(line =>
             line.length > 1 &&
@@ -69,11 +73,11 @@ export async function fetchAnimals() {
 
             let species = 'unknown';
             const notes = (line[6] || '').toLowerCase();
-            const rawSpecies = (line[11] || '').toLowerCase().trim();
+            const rawSpecies = (line[sIdx] || '').toLowerCase().trim();
             
-            if (rawSpecies.includes('кот') || rawSpecies.includes('cat') || notes.includes('fiv')) {
+            if (rawSpecies === 'c' || rawSpecies.includes('кот') || rawSpecies.includes('cat') || notes.includes('fiv')) {
                 species = 'cat';
-            } else if (rawSpecies.includes('куч') || rawSpecies.includes('dog') || notes.includes('дироф')) {
+            } else if (rawSpecies === 'd' || rawSpecies.includes('куч') || rawSpecies.includes('dog') || notes.includes('дироф')) {
                 species = 'dog';
             } else {
                 // Default fallback if not specified
