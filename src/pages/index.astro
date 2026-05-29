@@ -4,14 +4,14 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Начало">
     <!-- Hero Section -->
-    <section class="relative bg-orange-50 overflow-hidden">
+    <section class="relative bg-orange-50 overflow-hidden" style="isolation: isolate; contain: paint;">
         <!-- Ghost Dog -->
         <div
-            class="reveal reveal-left delay-300 absolute right-0 md:-right-20 bottom-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] pointer-events-none"
+            class="absolute right-0 md:-right-20 bottom-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] pointer-events-none reveal reveal-left delay-300"
         >
             <div
-                class="w-full h-full opacity-10 md:opacity-20 mix-blend-multiply bg-no-repeat bg-contain bg-bottom transform-gpu backface-hidden border-transparent"
-                style="background-image: url('/bg-dog.png')"
+                class="w-full h-full opacity-10 md:opacity-20 bg-no-repeat bg-contain bg-bottom"
+                style="background-image: url('/bg-dog-transparent.png'); transform: translateZ(0); backface-visibility: hidden; will-change: auto;"
             >
             </div>
         </div>
@@ -30,8 +30,7 @@ import Layout from "../layouts/Layout.astro";
             >
                 Ние сме неправителствена организация, посветена на спасяването,
                 лечението и намирането на любящи домове за животни в нужда в
-                град Варна, България <span class="text-xl leading-none">🇧🇬</span
-                > и региона.
+                град Варна, България <span class="text-xl leading-none">🇧🇬</span><span style="color: inherit;"> и региона.</span>
             </p>
             <div
                 class="reveal reveal-up delay-300 flex flex-col sm:flex-row gap-4"
