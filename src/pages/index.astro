@@ -30,7 +30,7 @@ import Layout from "../layouts/Layout.astro";
             >
                 Ние сме неправителствена организация, посветена на спасяването,
                 лечението и намирането на любящи домове за животни в нужда в
-                град Варна, България <span class="text-xl leading-none">🇧🇬</span><span style="color: inherit;"> и региона.</span>
+                град Варна, България <span class="text-xl leading-none">🇧🇬</span> и региона.
             </p>
             <div
                 class="reveal reveal-up delay-300 flex flex-col sm:flex-row gap-4"
@@ -459,13 +459,13 @@ import Layout from "../layouts/Layout.astro";
                 </div>
 
                 <div
-                    class="lg:w-1/2 flex justify-center lg:justify-end reveal reveal-up delay-400 w-full"
+                    class="hidden lg:flex lg:w-1/2 justify-center lg:justify-end reveal reveal-up delay-400 w-full"
                 >
                     <div
                         class="bg-white p-4 sm:p-8 rounded-2xl shadow-xl border border-slate-100 inline-flex justify-center max-w-full overflow-hidden"
                     >
                         <iframe
-                            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fanimalhope.varna&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                            data-src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fanimalhope.varna&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
                             width="500"
                             height="600"
                             style="border:none;overflow:hidden; max-width: 100%;"
@@ -473,10 +473,32 @@ import Layout from "../layouts/Layout.astro";
                             frameborder="0"
                             allowfullscreen="true"
                             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                            class="rounded-lg"></iframe>
+                            class="rounded-lg fb-desktop-iframe"></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // Load Facebook iframe only on desktop to prevent Safari privacy warnings on mobile
+        const loadFacebookIframe = () => {
+            if (window.innerWidth >= 1024) {
+                const iframes = document.querySelectorAll<HTMLIFrameElement>('.fb-desktop-iframe');
+                iframes.forEach(iframe => {
+                    if (iframe.dataset.src && !iframe.src) {
+                        iframe.src = iframe.dataset.src;
+                    }
+                });
+            }
+        };
+
+        // Run on load
+        loadFacebookIframe();
+        
+        // Listen for resize just in case they rotate an iPad or resize window
+        window.addEventListener('resize', () => {
+            loadFacebookIframe();
+        });
+    </script>
 </Layout>
