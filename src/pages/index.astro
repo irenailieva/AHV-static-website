@@ -352,67 +352,107 @@ import Layout from "../layouts/Layout.astro";
 
     <!-- How You Can Help -->
     <section class="py-20 bg-orange-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2
-                class="text-3xl font-extrabold text-slate-900 mb-6 reveal reveal-up"
-            >
-                Всеки може да помогне
-            </h2>
-            <p
-                class="text-xl text-slate-600 mb-12 max-w-3xl mx-auto reveal reveal-up delay-100"
-            >
-                Работата ни е безкрайна, а ние сме малко. Имаме нужда от вашата
-                подкрепа. Не е нужно да живеете в България – имаме доброволци,
-                които ни помагат дистанционно.
-            </p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal reveal-up">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">
+                    Всеки може да помогне
+                </h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                    Работата ни е безкрайна, а ние сме малко. Имаме нужда от вашата
+                    подкрепа. Не е нужно да живеете в България – имаме доброволци,
+                    които ни помагат дистанционно.
+                </p>
+            </div>
 
-            <p
-                class="text-lg text-slate-500 mb-6 reveal reveal-up delay-200 font-medium tracking-widest uppercase"
-            >
-                Можете да помогнете като:
-            </p>
-            <div
-                class="flex flex-wrap justify-center items-center gap-6 md:gap-8 mb-16 reveal reveal-up delay-200"
-            >
-                <span
-                    class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest"
-                    >Осиновите</span
-                >
-                <span class="hidden md:block text-orange-300 text-2xl"
-                    >&bull;</span
-                >
-                <span
-                    class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest"
-                    >Приютите</span
-                >
-                <span class="hidden md:block text-orange-300 text-2xl"
-                    >&bull;</span
-                >
-                <span
-                    class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest"
-                    >Дарите</span
-                >
-                <span class="hidden md:block text-orange-300 text-2xl"
-                    >&bull;</span
-                >
-                <span
-                    class="text-2xl md:text-3xl font-extrabold text-orange-700 uppercase tracking-widest"
-                    >Споделите</span
-                >
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 mb-16">
+                <div class="w-full lg:w-1/2 reveal reveal-left delay-100">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-video lg:aspect-square xl:aspect-[4/3]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=800" 
+                            alt="Доброволец си играе с кучета" 
+                            class="object-cover w-full h-full"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end p-8">
+                            <h3 class="text-white text-2xl font-bold">Твоята помощ променя животи</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 reveal reveal-right delay-200">
+                    <p class="text-lg text-slate-500 mb-6 font-medium tracking-widest uppercase text-center lg:text-left">
+                        Можете да помогнете като:
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Card 1 -->
+                        <a href="/adopt" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl border border-orange-100 hover:border-orange-500 transition-all duration-300 group flex flex-col items-center text-center lg:items-start lg:text-left">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-orange-500 transition-all duration-300">
+                                <svg class="w-6 h-6 text-orange-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-orange-700 transition-colors">Осиновите</h4>
+                            <p class="text-sm text-slate-600 mt-2">Отворете дома и сърцето си за нов член на семейството.</p>
+                        </a>
+                        
+                        <!-- Card 2 -->
+                        <a href="/foster" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl border border-teal-100 hover:border-teal-500 transition-all duration-300 group flex flex-col items-center text-center lg:items-start lg:text-left">
+                            <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-teal-500 transition-all duration-300">
+                                <svg class="w-6 h-6 text-teal-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-teal-700 transition-colors">Приютите</h4>
+                            <p class="text-sm text-slate-600 mt-2">Станете приемен дом и дайте време на животно да се възстанови.</p>
+                        </a>
+
+                        <!-- Card 3 -->
+                        <a href="/donate" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl border border-blue-100 hover:border-blue-500 transition-all duration-300 group flex flex-col items-center text-center lg:items-start lg:text-left">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-blue-500 transition-all duration-300">
+                                <svg class="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">Дарите</h4>
+                            <p class="text-sm text-slate-600 mt-2">Подкрепете ни финансово или с храна и консумативи.</p>
+                        </a>
+
+                        <!-- Card 4 -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl border border-purple-100 hover:border-purple-500 transition-all duration-300 group flex flex-col items-center text-center lg:items-start lg:text-left cursor-pointer" onclick="window.open('https://facebook.com/animalhope.varna', '_blank')">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-purple-500 transition-all duration-300">
+                                <svg class="w-6 h-6 text-purple-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 group-hover:text-purple-700 transition-colors">Споделите</h4>
+                            <p class="text-sm text-slate-600 mt-2">Споделете нашите публикации и помогнете да достигнем до повече хора.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div
-                class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg text-left reveal reveal-up delay-300"
+                class="max-w-4xl mx-auto bg-white p-8 sm:p-10 rounded-2xl shadow-lg text-left reveal reveal-up delay-300 border-l-4 border-orange-500 relative overflow-hidden"
             >
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">
-                    Дарителски кутии и клиники
-                </h3>
-                <p class="text-slate-600 mb-0">
-                    Имаме сключени договори с няколко ветеринарни клиники във
-                    Варна за работа при преференциални условия. В тях са
-                    поставени дарителски кутии, чрез които всеки може да помогне
-                    за лечението на животните.
-                </p>
+                <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-orange-50 rounded-full opacity-50 pointer-events-none"></div>
+                <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="bg-orange-100 p-4 rounded-xl flex-shrink-0">
+                        <svg class="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">
+                            Дарителски кутии и клиники
+                        </h3>
+                        <p class="text-slate-600 text-lg mb-0 leading-relaxed">
+                            Имаме сключени договори с няколко ветеринарни клиники във
+                            Варна за работа при преференциални условия. В тях са
+                            поставени дарителски кутии, чрез които всеки може да помогне
+                            за лечението на животните.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

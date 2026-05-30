@@ -19,7 +19,7 @@ body {
 }
 
 /* Scroll Reveal Animations */
-.reveal {
+.js .reveal {
   opacity: 0;
   transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
               transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -30,7 +30,7 @@ body {
 .reveal-left { transform: translateX(40px); }
 .reveal-right { transform: translateX(-40px); }
 
-.reveal.reveal-visible {
+.js .reveal.reveal-visible {
   opacity: 1;
   transform: translate(0, 0);
 }
