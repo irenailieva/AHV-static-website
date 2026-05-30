@@ -9,11 +9,14 @@ import Layout from "../layouts/Layout.astro";
         <div
             class="absolute -right-24 sm:-right-32 md:-right-56 -bottom-16 sm:-bottom-24 md:-bottom-40 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] pointer-events-none reveal reveal-left delay-300"
         >
-            <div
-                class="w-full h-full opacity-30 md:opacity-50 bg-no-repeat bg-contain bg-bottom"
-                style="background-image: url('/bg-dog-transparent.png'); transform: translateZ(0); backface-visibility: hidden; will-change: auto;"
-            >
-            </div>
+            <img
+                src="/bg-dog-transparent.png"
+                alt=""
+                class="w-full h-full object-contain object-bottom opacity-30 md:opacity-50 transition-opacity duration-1000 ease-in-out"
+                style="opacity: 0; transform: translateZ(0); backface-visibility: hidden; will-change: auto;"
+                onload="this.style.opacity = '';"
+                loading="eager"
+            />
         </div>
 
         <div

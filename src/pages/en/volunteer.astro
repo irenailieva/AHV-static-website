@@ -66,7 +66,13 @@ import catImage from "../../assets/CAT.jpg";
             </div>
 
             <div class="bg-orange-50 rounded-2xl mb-10 text-center border border-orange-100 overflow-hidden shadow-sm">
-                <img src="/Varna_Cathedral.JPG" alt="Cathedral of the Assumption, Varna" class="w-full h-48 sm:h-64 object-cover" />
+                <img 
+                    src="/Varna_Cathedral.JPG" 
+                    alt="Cathedral of the Assumption, Varna" 
+                    class="w-full h-48 sm:h-64 object-cover transition-opacity duration-1000 ease-in-out" 
+                    style="opacity: 0;"
+                    onload="this.style.opacity = '';"
+                />
                 <div class="p-8">
                     <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-4 flex items-center justify-center">
                         <svg class="w-8 h-8 text-orange-700 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
