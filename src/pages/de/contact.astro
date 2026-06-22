@@ -44,11 +44,20 @@ import Layout from "../../layouts/Layout.astro";
                 <p class="text-slate-600 mb-4">
                     Schreiben Sie uns bei allgemeinen Fragen und Partnerschaften.
                 </p>
-                <a
-                    href="mailto:animal.hope.varna.bg@gmail.com"
-                    class="text-sm sm:text-base lg:text-[13px] xl:text-base font-bold text-orange-700 hover:text-orange-800 transition-colors break-words"
-                    >animal.hope.varna.bg@gmail.com</a
-                >
+                <span class="inline-flex items-center gap-2 flex-wrap justify-center">
+                    <span class="text-sm sm:text-base lg:text-[13px] xl:text-base font-bold text-orange-700 break-all">animal.hope.varna.bg@gmail.com</span>
+                    <button
+                        id="copy-email-btn"
+                        aria-label="E-Mail-Adresse kopieren"
+                        class="relative group flex-shrink-0 text-slate-400 hover:text-orange-700 transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span id="copy-email-tooltip" class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200">Kopiert!</span>
+                    </button>
+                </span>
             </div>
 
             <!-- Facebook -->
@@ -134,3 +143,16 @@ import Layout from "../../layouts/Layout.astro";
         </div>
     </div>
 </Layout>
+
+<script>
+    const btn = document.getElementById("copy-email-btn");
+    const tooltip = document.getElementById("copy-email-tooltip");
+    if (btn && tooltip) {
+        btn.addEventListener("click", () => {
+            navigator.clipboard.writeText("animal.hope.varna.bg@gmail.com").then(() => {
+                tooltip.style.opacity = "1";
+                setTimeout(() => { tooltip.style.opacity = "0"; }, 2000);
+            });
+        });
+    }
+</script>
