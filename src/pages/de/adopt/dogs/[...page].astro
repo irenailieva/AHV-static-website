@@ -57,19 +57,6 @@ const translateBirthday = (bday: string) => {
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <a href="/de/adopt" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname === '/de/adopt' || Astro.url.pathname.startsWith('/de/adopt') && !Astro.url.pathname.includes('/dogs') && !Astro.url.pathname.includes('/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-                Alle
-            </a>
-            <a href="/de/adopt/dogs" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/de/adopt/dogs') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-                Hunde
-            </a>
-            <a href="/de/adopt/cats" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/de/adopt/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-                Katzen
-            </a>
-        </div>
-
         <!-- Adoption Questionnaire Banner -->
         <div class="relative mb-12 rounded-2xl overflow-hidden reveal reveal-up delay-100">
             <div class="absolute inset-0 bg-gradient-to-r from-orange-700 via-orange-500 to-amber-400"></div>
@@ -84,6 +71,19 @@ const translateBirthday = (bday: string) => {
                     Fragebogen ausfüllen
                 </a>
             </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <a href="/de/adopt" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname === '/de/adopt' || Astro.url.pathname.startsWith('/de/adopt') && !Astro.url.pathname.includes('/dogs') && !Astro.url.pathname.includes('/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Alle
+            </a>
+            <a href="/de/adopt/dogs" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/de/adopt/dogs') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Hunde
+            </a>
+            <a href="/de/adopt/cats" class={`px-6 py-2 rounded-full font-bold transition-colors ${Astro.url.pathname.includes('/de/adopt/cats') ? 'bg-orange-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                Katzen
+            </a>
         </div>
 
         <!-- Animals Grid -->
