@@ -350,5 +350,139 @@ const pathname = Astro.url.pathname;
                 </div>
             </div>
         </footer>
+
+        <!-- In-App Browser (IAB) Notice Banner & Modal Helper -->
+        <div
+            id="iab-banner"
+            class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md bg-zinc-900/95 text-white p-4 rounded-xl shadow-2xl border border-orange-500/30 z-50 transform translate-y-32 opacity-0 transition-all duration-500 hidden backdrop-blur-md"
+        >
+            <div class="flex items-start gap-3">
+                <div class="p-2 bg-orange-500/20 rounded-lg text-orange-400 shrink-0 mt-0.5">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="flex-grow text-sm">
+                    <h4 class="font-bold text-orange-400 mb-1">{t('iab.banner.title')}</h4>
+                    <p class="text-zinc-300 leading-relaxed text-xs sm:text-sm">{t('iab.banner.desc')}</p>
+                </div>
+                <button
+                    id="iab-dismiss"
+                    class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors shrink-0"
+                    aria-label="Close"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- In-App Browser Click Interceptor Modal -->
+        <div
+            id="iab-modal"
+            class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm"
+        >
+            <div class="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl transform scale-95 transition-transform duration-300 text-white" id="iab-modal-content">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold">{t('iab.modal.title')}</h3>
+                </div>
+                <p class="text-zinc-300 text-sm leading-relaxed mb-6 bg-zinc-800/60 p-4 rounded-xl border border-zinc-700/50">
+                    {t('iab.modal.desc')}
+                </p>
+                <div class="flex flex-col sm:flex-row justify-end gap-3">
+                    <button
+                        id="iab-modal-cancel"
+                        class="px-5 py-2.5 rounded-xl border border-zinc-700 text-zinc-300 hover:bg-zinc-800 font-medium text-sm transition-colors"
+                    >
+                        {t('iab.modal.btn.cancel')}
+                    </button>
+                    <button
+                        id="iab-modal-continue"
+                        class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
+                    >
+                        <span>{t('iab.modal.btn.continue')}</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const initInAppBrowserHelper = () => {
+                const ua = navigator.userAgent || navigator.vendor || window.opera || "";
+                const isFacebookOrInstagram = ua.includes("FBAV") || ua.includes("FBAN") || ua.includes("FB_IAB") || ua.includes("Instagram");
+                
+                if (!isFacebookOrInstagram) return;
+
+                const banner = document.getElementById('iab-banner');
+                const dismissBtn = document.getElementById('iab-dismiss');
+                const modal = document.getElementById('iab-modal');
+                const modalContent = document.getElementById('iab-modal-content');
+                const cancelBtn = document.getElementById('iab-modal-cancel');
+                const continueBtn = document.getElementById('iab-modal-continue');
+
+                // Show top/bottom advisory banner if not dismissed in session
+                if (banner && !sessionStorage.getItem('iab_banner_dismissed')) {
+                    banner.classList.remove('hidden');
+                    setTimeout(() => {
+                        banner.classList.remove('translate-y-32', 'opacity-0');
+                    }, 500);
+
+                    dismissBtn?.addEventListener('click', () => {
+                        banner.classList.add('translate-y-32', 'opacity-0');
+                        sessionStorage.setItem('iab_banner_dismissed', 'true');
+                        setTimeout(() => banner.classList.add('hidden'), 500);
+                    }, { once: true });
+                }
+
+                // Intercept Facebook album/post links to show the guidance modal
+                let pendingUrl = '';
+                document.querySelectorAll('a[href*="facebook.com"]').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const href = link.getAttribute('href');
+                        if (href && (href.includes('/media/set') || href.includes('/posts/') || href.includes('/photo'))) {
+                            e.preventDefault();
+                            pendingUrl = href;
+                            if (modal && modalContent) {
+                                modal.classList.remove('opacity-0', 'pointer-events-none');
+                                modalContent.classList.remove('scale-95');
+                            }
+                        }
+                    });
+                });
+
+                const closeModal = () => {
+                    if (modal && modalContent) {
+                        modal.classList.add('opacity-0', 'pointer-events-none');
+                        modalContent.classList.add('scale-95');
+                    }
+                    pendingUrl = '';
+                };
+
+                cancelBtn?.addEventListener('click', closeModal);
+                modal?.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
+                });
+
+                continueBtn?.addEventListener('click', () => {
+                    if (pendingUrl) {
+                        const urlToOpen = pendingUrl;
+                        closeModal();
+                        window.open(urlToOpen, '_blank');
+                    }
+                });
+            };
+
+            initInAppBrowserHelper();
+            document.addEventListener("astro:after-swap", initInAppBrowserHelper);
+        </script>
     </body>
 </html>

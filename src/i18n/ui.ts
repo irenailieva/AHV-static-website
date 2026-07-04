@@ -18,6 +18,12 @@ export const ui = {
     'footer.address': 'Варна, България',
     'footer.follow': 'Последвайте ни',
     'footer.socialDesc': 'Всички осиновявания и актуални новини се случват в нашата Facebook страница.',
+    'iab.banner.title': 'Внимание: Вграден браузър',
+    'iab.banner.desc': 'За да разглеждате албумите във Facebook без да ви иска вход, натиснете ··· (горе или долу) и изберете „Отвори в Safari/Chrome“.',
+    'iab.modal.title': 'Отваряне на Facebook албум',
+    'iab.modal.desc': 'Разглеждате през вградения браузър на Facebook/Instagram. Ако Facebook ви поиска вход, натиснете менюто ··· в ъгъла и изберете „Отвори в Safari / Chrome“, за да видите албума веднага!',
+    'iab.modal.btn.continue': 'Продължи към албума',
+    'iab.modal.btn.cancel': 'Отказ',
   },
   en: {
     'nav.home': 'Home',
@@ -30,6 +36,12 @@ export const ui = {
     'footer.address': 'Varna, Bulgaria',
     'footer.follow': 'Follow us',
     'footer.socialDesc': 'All adoptions and current news happen on our Facebook page.',
+    'iab.banner.title': 'Notice: Built-in Browser',
+    'iab.banner.desc': 'To view Facebook albums without login prompts, tap ··· (top or bottom corner) and select "Open in Safari/Chrome".',
+    'iab.modal.title': 'Opening Facebook Album',
+    'iab.modal.desc': 'You are viewing inside the Facebook/Instagram app browser. If you see a login screen, tap the ··· menu in the corner and select "Open in Safari / Chrome" to view the album instantly!',
+    'iab.modal.btn.continue': 'Continue to Album',
+    'iab.modal.btn.cancel': 'Cancel',
   },
   de: {
     'nav.home': 'Startseite',
@@ -42,5 +54,12 @@ export const ui = {
     'footer.address': 'Varna, Bulgarien',
     'footer.follow': 'Folgen Sie uns',
     'footer.socialDesc': 'Alle Adoptionen und aktuellen Nachrichten finden auf unserer Facebook-Seite statt.',
+    'iab.banner.title': 'Hinweis: Interner Browser',
+    'iab.banner.desc': 'Um Facebook-Alben ohne Anmeldeaufforderung zu sehen, tippen Sie auf ··· (oben/unten) und wählen Sie „In Safari/Chrome öffnen“.',
+    'iab.modal.title': 'Facebook-Album wird geöffnet',
+    'iab.modal.desc': 'Sie befinden sich im internen App-Browser. Falls eine Anmeldeseite erscheint, tippen Sie auf das Menü ··· und wählen Sie „In Safari / Chrome öffnen“, um das Album sofort zu sehen!',
+    'iab.modal.btn.continue': 'Weiter zum Album',
+    'iab.modal.btn.cancel': 'Abbrechen',
   },
 } as const;
+
