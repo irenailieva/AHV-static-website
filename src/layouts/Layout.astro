@@ -283,6 +283,18 @@ const pathname = Astro.url.pathname;
 
             // Run on view transitions if using Astro transitions
             document.addEventListener("astro:after-swap", initScrollReveal);
+
+            // Fix for Facebook in-app browser deep-linking bug
+            const fixFacebookLinks = () => {
+                const isFacebookApp = navigator.userAgent.includes("FBAV") || navigator.userAgent.includes("FBAN");
+                if (isFacebookApp) {
+                    document.querySelectorAll('a[href*="facebook.com"]').forEach(link => {
+                        link.removeAttribute("target");
+                    });
+                }
+            };
+            fixFacebookLinks();
+            document.addEventListener("astro:after-swap", fixFacebookLinks);
         </script>
 
         <main class="flex-grow">
