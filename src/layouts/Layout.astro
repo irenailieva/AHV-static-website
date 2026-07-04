@@ -364,7 +364,7 @@ const pathname = Astro.url.pathname;
                 </div>
                 <div class="flex-grow text-sm">
                     <h4 class="font-bold text-orange-400 mb-1">{t('iab.banner.title')}</h4>
-                    <p class="text-zinc-300 leading-relaxed text-xs sm:text-sm" set:html={t('iab.banner.desc')}></p>
+                    <div class="text-zinc-300 leading-relaxed text-xs sm:text-sm" set:html={t('iab.banner.desc')}></div>
                 </div>
                 <button
                     id="iab-dismiss"
@@ -392,7 +392,7 @@ const pathname = Astro.url.pathname;
                     </div>
                     <h3 class="text-lg font-bold">{t('iab.modal.title')}</h3>
                 </div>
-                <p class="text-zinc-300 text-sm leading-relaxed mb-6 bg-zinc-800/60 p-4 rounded-xl border border-zinc-700/50" set:html={t('iab.modal.desc')}></p>
+                <div class="text-zinc-300 text-sm leading-relaxed mb-6 bg-zinc-800/60 p-4 rounded-xl border border-zinc-700/50" set:html={t('iab.modal.desc')}></div>
                 <div class="flex flex-col sm:flex-row justify-end gap-3">
                     <button
                         id="iab-modal-cancel"
@@ -428,7 +428,7 @@ const pathname = Astro.url.pathname;
                 const continueBtn = document.getElementById('iab-modal-continue');
 
                 // Show top/bottom advisory banner if not dismissed in session
-                if (banner && !sessionStorage.getItem('iab_banner_dismissed_v2')) {
+                if (banner && !sessionStorage.getItem('iab_banner_dismissed_v3')) {
                     banner.classList.remove('hidden');
                     setTimeout(() => {
                         banner.classList.remove('translate-y-32', 'opacity-0');
@@ -436,7 +436,7 @@ const pathname = Astro.url.pathname;
 
                     dismissBtn?.addEventListener('click', () => {
                         banner.classList.add('translate-y-32', 'opacity-0');
-                        sessionStorage.setItem('iab_banner_dismissed_v2', 'true');
+                        sessionStorage.setItem('iab_banner_dismissed_v3', 'true');
                         setTimeout(() => banner.classList.add('hidden'), 500);
                     }, { once: true });
                 }
