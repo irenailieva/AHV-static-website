@@ -364,7 +364,7 @@ const pathname = Astro.url.pathname;
                 </div>
                 <div class="flex-grow text-sm">
                     <h4 class="font-bold text-orange-400 mb-1">{t('iab.banner.title')}</h4>
-                    <p class="text-zinc-300 leading-relaxed text-xs sm:text-sm">{t('iab.banner.desc')}</p>
+                    <p class="text-zinc-300 leading-relaxed text-xs sm:text-sm" set:html={t('iab.banner.desc')}></p>
                 </div>
                 <button
                     id="iab-dismiss"
@@ -392,9 +392,7 @@ const pathname = Astro.url.pathname;
                     </div>
                     <h3 class="text-lg font-bold">{t('iab.modal.title')}</h3>
                 </div>
-                <p class="text-zinc-300 text-sm leading-relaxed mb-6 bg-zinc-800/60 p-4 rounded-xl border border-zinc-700/50">
-                    {t('iab.modal.desc')}
-                </p>
+                <p class="text-zinc-300 text-sm leading-relaxed mb-6 bg-zinc-800/60 p-4 rounded-xl border border-zinc-700/50" set:html={t('iab.modal.desc')}></p>
                 <div class="flex flex-col sm:flex-row justify-end gap-3">
                     <button
                         id="iab-modal-cancel"
