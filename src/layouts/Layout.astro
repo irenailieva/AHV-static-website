@@ -284,28 +284,6 @@ const pathname = Astro.url.pathname;
             // Run on view transitions if using Astro transitions
             document.addEventListener("astro:after-swap", initScrollReveal);
 
-            // Fix for Facebook in-app browser deep-linking bug
-            const fixFacebookLinks = () => {
-                const ua = navigator.userAgent || navigator.vendor || window.opera || "";
-                const isFacebookApp = ua.includes("FBAV") || ua.includes("FBAN") || ua.includes("FB_IAB");
-                if (isFacebookApp) {
-                    const isAndroid = /Android/i.test(ua);
-                    document.querySelectorAll('a[href*="facebook.com"]').forEach(link => {
-                        const originalUrl = link.getAttribute("href");
-                        if (originalUrl && !originalUrl.startsWith("fb://") && !originalUrl.startsWith("intent://")) {
-                            link.removeAttribute("target");
-                            if (isAndroid) {
-                                const cleanUrl = originalUrl.replace(/^https?:\/\//, '');
-                                link.setAttribute("href", `intent://${cleanUrl}#Intent;scheme=https;package=com.facebook.katana;end`);
-                            } else {
-                                link.setAttribute("href", `fb://facewebmodal/f?href=${encodeURIComponent(originalUrl)}`);
-                            }
-                        }
-                    });
-                }
-            };
-            fixFacebookLinks();
-            document.addEventListener("astro:after-swap", fixFacebookLinks);
         </script>
 
         <main class="flex-grow">
