@@ -286,10 +286,21 @@ const pathname = Astro.url.pathname;
 
             // Fix for Facebook in-app browser deep-linking bug
             const fixFacebookLinks = () => {
-                const isFacebookApp = navigator.userAgent.includes("FBAV") || navigator.userAgent.includes("FBAN");
+                const ua = navigator.userAgent || navigator.vendor || window.opera || "";
+                const isFacebookApp = ua.includes("FBAV") || ua.includes("FBAN") || ua.includes("FB_IAB");
                 if (isFacebookApp) {
+                    const isAndroid = /Android/i.test(ua);
                     document.querySelectorAll('a[href*="facebook.com"]').forEach(link => {
-                        link.removeAttribute("target");
+                        const originalUrl = link.getAttribute("href");
+                        if (originalUrl && !originalUrl.startsWith("fb://") && !originalUrl.startsWith("intent://")) {
+                            link.removeAttribute("target");
+                            if (isAndroid) {
+                                const cleanUrl = originalUrl.replace(/^https?:\/\//, '');
+                                link.setAttribute("href", `intent://${cleanUrl}#Intent;scheme=https;package=com.facebook.katana;end`);
+                            } else {
+                                link.setAttribute("href", `fb://facewebmodal/f?href=${encodeURIComponent(originalUrl)}`);
+                            }
+                        }
                     });
                 }
             };
