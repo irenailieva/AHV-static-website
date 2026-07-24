@@ -2,7 +2,7 @@ Task: Initialize a modern, static website for "Animal Hope Varna" using Astro.js
 
 Project Structure:
 
-    High-performance informational site (no database, no adoption filtering).
+    High-performance informational site (no database).
 
     Pages to create:
 
