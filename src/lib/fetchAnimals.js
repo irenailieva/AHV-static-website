@@ -96,6 +96,10 @@ export async function fetchAnimals() {
         });
 
         // 2. Fetch images mapping
+        // Sheet columns: [0] Name | [1] Species (cat/dog) | [2] Google Drive Link
+        // The Species column is optional for backward compatibility.
+        // Map key = "name_species" when species is present (e.g. "nessy_cat"),
+        // or plain "name" when species column is empty/missing.
         const imageMap = new Map();
         try {
             const imgResponse = await fetch(IMAGES_CSV_URL);
@@ -103,10 +107,40 @@ export async function fetchAnimals() {
                 const imgCsvText = await imgResponse.text();
                 const imgRows = csvToArray(imgCsvText);
                 imgRows.slice(1).forEach(line => {
-                    if (line.length >= 2 && line[0] && line[1]) {
+                    if (line.length >= 2 && line[0]) {
                         const name = line[0].trim().toLowerCase();
-                        const fileId = extractDriveId(line[1].trim());
-                        if (fileId) imageMap.set(name, fileId);
+
+                        // Detect whether the row uses the new 3-column format
+                        // (Name | Species | Link) or the old 2-column format (Name | Link).
+                        // If col[1] looks like a Drive URL/ID it is the old format.
+                        const col1 = (line[1] || '').trim();
+                        const col2 = (line[2] || '').trim();
+                        const col1IsLink = col1.includes('drive.google.com') || col1.includes('docs.google.com');
+
+                        let species = '';
+                        let rawLink = '';
+
+                        if (!col1IsLink && col1 !== '' && col2 !== '') {
+                            // New format: species in col1, link in col2
+                            species = col1.toLowerCase();
+                            rawLink = col2;
+                        } else {
+                            // Old / legacy format: link in col1, no species
+                            rawLink = col1;
+                        }
+
+                        const fileId = extractDriveId(rawLink);
+                        if (!fileId) return;
+
+                        // Always register the species-qualified key when available
+                        if (species) {
+                            imageMap.set(`${name}_${species}`, fileId);
+                        }
+                        // Also register the plain-name key as fallback
+                        // (won't overwrite an already-set entry so first entry wins)
+                        if (!imageMap.has(name)) {
+                            imageMap.set(name, fileId);
+                        }
                     }
                 });
             }
@@ -123,8 +157,13 @@ export async function fetchAnimals() {
         // 4. Merge and download sequentially to avoid rate limits
         for (let animal of animals) {
             const nameKey = animal.name.trim().toLowerCase();
-            if (imageMap.has(nameKey)) {
-                const fileId = imageMap.get(nameKey);
+            const speciesKey = `${nameKey}_${animal.species}`;
+            // Prefer the species-qualified key to avoid name collisions (e.g. two animals
+            // named "Nessy" where one is a cat and the other a dog). Fall back to the
+            // plain name key for rows that pre-date the Species column in the sheet.
+            const resolvedKey = imageMap.has(speciesKey) ? speciesKey : nameKey;
+            if (imageMap.has(resolvedKey)) {
+                const fileId = imageMap.get(resolvedKey);
                 const localFileName = `${fileId}.jpg`;
                 const localFilePath = path.join(publicDir, localFileName);
 
