@@ -136,11 +136,11 @@ export async function fetchAnimals() {
                         if (species) {
                             imageMap.set(`${name}_${species}`, fileId);
                         }
-                        // Also register the plain-name key as fallback
-                        // (won't overwrite an already-set entry so first entry wins)
-                        if (!imageMap.has(name)) {
-                            imageMap.set(name, fileId);
-                        }
+                        // Also register / update the plain-name key as a backward-compat fallback.
+                        // Always overwrite so the last entry wins — identical to the original behaviour
+                        // before the species column was introduced. The species-qualified key above is
+                        // what actually prevents same-name collisions across species.
+                        imageMap.set(name, fileId);
                     }
                 });
             }
