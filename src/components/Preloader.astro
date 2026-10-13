@@ -1,0 +1,211 @@
+---
+// Preloader component for Animal Hope Varna
+---
+
+<!-- Critical inline styles so the preloader renders on frame 0 before external CSS is downloaded -->
+<style is:inline>
+  #site-preloader {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    background-color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  #site-preloader.preloader-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  @keyframes ahv-pulse {
+    0%, 100% {
+      transform: scale(1);
+      filter: drop-shadow(0 4px 16px rgba(246, 138, 31, 0.15));
+    }
+    50% {
+      transform: scale(1.035);
+      filter: drop-shadow(0 8px 24px rgba(246, 138, 31, 0.28));
+    }
+  }
+
+  @keyframes ahv-progress {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(35%);
+    }
+    100% {
+      transform: translateX(160%);
+    }
+  }
+
+  .preloader-logo-pulse {
+    animation: ahv-pulse 2s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preloader-bar-bg {
+    width: 150px;
+    height: 3px;
+    background-color: #e2e8f0;
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 20px;
+  }
+
+  .preloader-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 55%;
+    background: linear-gradient(90deg, #f68a1f, #bd5b00);
+    border-radius: 9999px;
+    animation: ahv-progress 1.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .preloader-logo-pulse,
+    .preloader-bar-fill {
+      animation: none !important;
+    }
+    #site-preloader {
+      transition: opacity 0.15s ease !important;
+    }
+  }
+</style>
+
+<div id="site-preloader" aria-hidden="true">
+  <div class="preloader-content flex flex-col items-center justify-center p-6 text-center">
+    <!-- Centered Logo with smooth pulse animation -->
+    <div class="preloader-logo-pulse">
+      <img
+        src="/logo_AHV.svg"
+        alt="Animal Hope Varna"
+        width="425"
+        height="36"
+        class="w-[clamp(240px,32vw,360px)] h-auto object-contain"
+        fetchpriority="high"
+        loading="eager"
+        decoding="sync"
+      />
+    </div>
+
+    <!-- Elegant subtle indeterminate loading line -->
+    <div class="preloader-bar-bg" role="progressbar" aria-label="Зареждане">
+      <div class="preloader-bar-fill"></div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const preloader = document.getElementById('site-preloader');
+    if (!preloader) return;
+
+    // Minimum display time (ms) to avoid jarring flicker on instant cached loads
+    const minDisplayTime = 380;
+    const startTime = performance.now();
+    let isHidden = false;
+
+    // Check for demo/test mode in query params (?loader-test or ?loader-demo)
+    const isTestMode = window.location.search.includes('loader-test') || window.location.search.includes('loader-demo');
+
+    function hidePreloader(instant = false) {
+      if (isHidden) return;
+      isHidden = true;
+
+      if (instant) {
+        preloader.classList.add('preloader-hidden');
+        setTimeout(() => { preloader.style.display = 'none'; }, 50);
+        return;
+      }
+
+      const elapsed = performance.now() - startTime;
+      const targetDelay = isTestMode ? 3000 : Math.max(0, minDisplayTime - elapsed);
+
+      setTimeout(() => {
+        preloader.classList.add('preloader-hidden');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 450);
+      }, targetDelay);
+    }
+
+    // Dismiss when entire page (DOM, styles, fonts, images) has loaded
+    if (document.readyState === 'complete') {
+      hidePreloader();
+    } else {
+      window.addEventListener('load', () => hidePreloader(), { once: true });
+    }
+
+    // Maximum safety fallback (e.g. stalled external font or unpkg script)
+    setTimeout(() => {
+      hidePreloader();
+    }, isTestMode ? 5000 : 4000);
+
+    // Support browser Back/Forward Cache (bfcache)
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        hidePreloader(true);
+      }
+    });
+
+    // Optional: Smoothly show loader on internal page navigation clicks
+    let navTimeout;
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      // Ignore external links, new tabs, anchor jumps, tel/mailto
+      if (
+        link.target === '_blank' ||
+        e.ctrlKey || e.metaKey || e.shiftKey || e.altKey ||
+        href.startsWith('#') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:') ||
+        href.startsWith('javascript:')
+      ) {
+        return;
+      }
+
+      // Check if internal navigation
+      try {
+        const targetUrl = new URL(link.href, window.location.origin);
+        if (targetUrl.origin === window.location.origin) {
+          // If navigating to a different page/path
+          if (targetUrl.pathname !== window.location.pathname || targetUrl.search !== window.location.search) {
+            preloader.style.display = 'flex';
+            void preloader.offsetHeight;
+            preloader.classList.remove('preloader-hidden');
+            
+            // Safety timeout in case navigation is aborted
+            clearTimeout(navTimeout);
+            navTimeout = setTimeout(() => {
+              hidePreloader();
+            }, 3500);
+          }
+        }
+      } catch (_) {}
+    });
+  })();
+</script>

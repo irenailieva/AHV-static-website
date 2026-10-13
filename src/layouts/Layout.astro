@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Preloader from '../components/Preloader.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { languages } from '../i18n/ui';
 import { getRelativeLocaleUrl } from 'astro:i18n';
@@ -66,6 +67,7 @@ const pathname = Astro.url.pathname;
         </style>
     </head>
     <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+        <Preloader />
         <header class="bg-white shadow-sm sticky top-0 z-50">
             <nav
                 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center gap-4 sm:gap-8 lg:gap-12"
