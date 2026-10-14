@@ -53,12 +53,10 @@
 
   @keyframes ahv-pulse {
     0%, 100% {
-      transform: scale(1);
-      filter: drop-shadow(0 4px 16px rgba(246, 138, 31, 0.15));
+      transform: scale(1) translateZ(0);
     }
     50% {
-      transform: scale(1.035);
-      filter: drop-shadow(0 8px 24px rgba(246, 138, 31, 0.28));
+      transform: scale(1.035) translateZ(0);
     }
   }
 
@@ -74,20 +72,42 @@
     }
   }
 
-  .preloader-logo-pulse {
-    animation: ahv-pulse 2s ease-in-out infinite;
+  .preloader-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .preloader-logo-pulse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    animation: ahv-pulse 2.2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 14px rgba(246, 138, 31, 0.22));
   }
 
   .preloader-logo-img {
+    width: clamp(240px, 32vw, 360px);
+    max-width: 90vw;
+    height: auto;
+    object-fit: contain;
+    display: block;
     color: transparent !important;
     font-size: 0 !important;
     line-height: 0 !important;
     user-select: none;
     -webkit-user-select: none;
+    pointer-events: none;
   }
 
   /* Loading bar: hidden on mobile-sized screens (<640px) */
@@ -131,7 +151,7 @@
 </style>
 
 <div id="site-preloader" aria-hidden="true">
-  <div class="preloader-content flex flex-col items-center justify-center p-6 text-center">
+  <div class="preloader-content">
     <!-- Centered Logo with smooth pulse animation -->
     <div class="preloader-logo-pulse">
       <img
@@ -140,10 +160,10 @@
         role="presentation"
         width="425"
         height="36"
-        class="w-[clamp(240px,32vw,360px)] h-auto object-contain preloader-logo-img text-transparent"
+        class="preloader-logo-img text-transparent"
         fetchpriority="high"
         loading="eager"
-        decoding="sync"
+        decoding="async"
       />
     </div>
 
