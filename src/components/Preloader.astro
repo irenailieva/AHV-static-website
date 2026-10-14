@@ -1,9 +1,43 @@
 ---
 // Preloader component for Animal Hope Varna
+import fs from 'node:fs';
+import path from 'node:path';
+
+const svgPath = path.resolve('./public/logo_AHV.svg');
+let logoSvg = '';
+try {
+  logoSvg = fs.readFileSync(svgPath, 'utf-8');
+  logoSvg = logoSvg
+    .replace(/<\?xml.*?\?>/g, '')
+    .replace(/<sodipodi:namedview[\s\S]*?<\/sodipodi:namedview>/g, '')
+    .replace(/<defs[\s\S]*?<\/defs>/g, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/width="[^"]*"/, 'width="100%"')
+    .replace(/height="[^"]*"/, 'height="100%"')
+    .trim();
+} catch (e) {
+  logoSvg = '';
+}
 ---
 
 <!-- Critical inline styles so the preloader renders on frame 0 before external CSS is downloaded -->
 <style is:inline>
+  /* Prevent any underlying page content from bleeding through Safari's translucent chrome during load */
+  html.is-loading,
+  html.is-loading body {
+    overflow: hidden !important;
+    height: 100% !important;
+    background-color: #f8fafc !important;
+    touch-action: none;
+  }
+
+  /* While loading, hide everything under the preloader so nothing peeks through Safari's bottom bar */
+  html.is-loading body > :not(#site-preloader) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
   #site-preloader {
     position: fixed;
     top: 0;
@@ -24,7 +58,7 @@
     justify-content: flex-start;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: auto;
     touch-action: none;
     overscroll-behavior: none;
@@ -34,7 +68,6 @@
 
   #site-preloader.preloader-hidden {
     opacity: 0 !important;
-    visibility: hidden !important;
     pointer-events: none !important;
   }
 
@@ -52,12 +85,63 @@
     box-sizing: border-box;
   }
 
+  .preloader-logo-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preloader-glow {
+    position: absolute;
+    width: clamp(260px, 35vw, 380px);
+    height: 70px;
+    background: radial-gradient(ellipse at center, rgba(246, 138, 31, 0.22) 0%, rgba(248, 250, 252, 0) 70%);
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 0;
+    animation: ahv-glow-pulse 2.2s ease-in-out infinite;
+  }
+
+  .preloader-logo-pulse {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    animation: ahv-pulse 2.2s ease-in-out infinite;
+  }
+
+  .preloader-logo-pulse svg {
+    width: clamp(240px, 32vw, 360px);
+    max-width: 90vw;
+    height: auto;
+    aspect-ratio: 425.1969 / 35.732;
+    display: block;
+  }
+
   @keyframes ahv-pulse {
     0%, 100% {
-      transform: scale(1) translateZ(0);
+      transform: scale(1);
+      opacity: 0.94;
     }
     50% {
-      transform: scale(1.035) translateZ(0);
+      transform: scale(1.035);
+      opacity: 1;
+    }
+  }
+
+  @keyframes ahv-glow-pulse {
+    0%, 100% {
+      transform: scale(0.96);
+      opacity: 0.65;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 1;
     }
   }
 
@@ -73,33 +157,6 @@
     }
   }
 
-  .preloader-logo-pulse {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    animation: ahv-pulse 2.2s ease-in-out infinite;
-    filter: drop-shadow(0 4px 14px rgba(246, 138, 31, 0.22));
-  }
-
-  .preloader-logo-img {
-    width: clamp(240px, 32vw, 360px);
-    max-width: 90vw;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    color: transparent !important;
-    font-size: 0 !important;
-    line-height: 0 !important;
-    user-select: none;
-    -webkit-user-select: none;
-    pointer-events: none;
-  }
-
   /* Loading bar: hidden on mobile-sized screens (<640px) */
   .preloader-bar-bg {
     display: none;
@@ -110,6 +167,7 @@
     overflow: hidden;
     position: relative;
     margin-top: 20px;
+    z-index: 1;
   }
 
   @media (min-width: 640px) {
@@ -127,6 +185,7 @@
     background: linear-gradient(90deg, #f68a1f, #bd5b00);
     border-radius: 9999px;
     animation: ahv-progress 1.4s ease-in-out infinite;
+    will-change: transform;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -142,19 +201,10 @@
 
 <div id="site-preloader" aria-hidden="true">
   <div class="preloader-content">
-    <!-- Centered Logo with smooth pulse animation -->
-    <div class="preloader-logo-pulse">
-      <img
-        src="/logo_AHV.svg"
-        alt=""
-        role="presentation"
-        width="425"
-        height="36"
-        class="preloader-logo-img text-transparent"
-        fetchpriority="high"
-        loading="eager"
-        decoding="async"
-      />
+    <!-- Centered Logo with smooth GPU-accelerated pulse and inline SVG -->
+    <div class="preloader-logo-container">
+      <div class="preloader-glow" aria-hidden="true"></div>
+      <div class="preloader-logo-pulse" set:html={logoSvg}></div>
     </div>
 
     <!-- Elegant subtle indeterminate loading line (hidden on mobile-sized screens) -->
@@ -182,6 +232,7 @@
       isHidden = true;
 
       if (instant) {
+        document.documentElement.classList.remove('is-loading');
         preloader.classList.add('preloader-hidden');
         setTimeout(() => { preloader.style.display = 'none'; }, 50);
         return;
@@ -191,6 +242,8 @@
       const targetDelay = isTestMode ? 3000 : Math.max(0, minDisplayTime - elapsed);
 
       setTimeout(() => {
+        // Restore document content visibility right as the preloader begins its fade out
+        document.documentElement.classList.remove('is-loading');
         preloader.classList.add('preloader-hidden');
         setTimeout(() => {
           preloader.style.display = 'none';
@@ -243,6 +296,7 @@
         if (targetUrl.origin === window.location.origin) {
           // If navigating to a different page/path
           if (targetUrl.pathname !== window.location.pathname || targetUrl.search !== window.location.search) {
+            document.documentElement.classList.add('is-loading');
             preloader.style.display = 'flex';
             void preloader.offsetHeight;
             preloader.classList.remove('preloader-hidden');

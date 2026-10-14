@@ -43,8 +43,24 @@ const pathname = Astro.url.pathname;
             />
         </noscript>
         <script is:inline>
-            document.documentElement.classList.add('js');
+            document.documentElement.classList.add('js', 'is-loading');
         </script>
+        <style is:inline>
+            /* Prevent any underlying page content from bleeding through Safari's translucent chrome or flashing on PC during load */
+            html.is-loading,
+            html.is-loading body {
+                overflow: hidden !important;
+                height: 100% !important;
+                max-height: 100% !important;
+                background-color: #f8fafc !important;
+                touch-action: none;
+            }
+            html.is-loading body > :not(#site-preloader) {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+            }
+        </style>
         <style is:global>
             @font-face {
                 font-family: "Twemoji Country Flags";
