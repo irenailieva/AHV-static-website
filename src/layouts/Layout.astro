@@ -60,6 +60,17 @@ const pathname = Astro.url.pathname;
                 visibility: hidden !important;
                 pointer-events: none !important;
             }
+            #site-preloader {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                height: 100dvh !important;
+                z-index: 2147483647 !important;
+            }
         </style>
         <style is:global>
             @font-face {
