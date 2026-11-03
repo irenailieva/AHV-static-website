@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --font-serif: "Merriweather", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Twemoji Country Flags", "Onest", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
   --color-orange-50: #fef5ec;
   --color-orange-100: #fce8d2;
   --color-orange-500: #f68a1f; /* RGB(246, 138, 31) */
