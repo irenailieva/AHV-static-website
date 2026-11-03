@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # dynamically downloaded animal images
 src/assets/animals/
+
+# IDE / agent settings
+.gemini/
+actual_frame_1.5.png
